@@ -14,6 +14,8 @@ export default function Home() {
   useEffect(() => {
     router.prefetch("/support");
     router.prefetch("/faq");
+    router.prefetch("/blog");
+    router.prefetch("/tasks");
   }, [router]);
 
   return (
