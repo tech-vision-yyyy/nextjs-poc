@@ -1,0 +1,23 @@
+variables:
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+    path: nextjs-poc
+
+  - script: vercel --version
+    displayName: "Vercel Version"
+
+  - script: vercel link --token $(VERCEL_SECRET) --confirm
+    displayName: "Vercel Project Linking"
+
+  - script: vercel --token $(VERCEL_SECRET) .
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Deploy to Vercel"
+
+  - script: vercel --token $(VERCEL_SECRET) --prod .
+    condition: and(succeeded(), eq(variables.isMain, 'True'))
+    displayName: "Deploy to Vercel"

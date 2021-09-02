@@ -1,0 +1,59 @@
+{
+  "name": "nextjs-poc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare": "husky install",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook -s public/",
+    "serve-storybook": "serve storybook-static",
+    "chromatic": "npx chromatic --project-token=69299bbfc952"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.15",
+    "axios": "^0.21.1",
+    "graphql": "^15.5.1",
+    "graphql-request": "^3.5.0",
+    "lru-cache": "^6.0.0",
+    "next": "11.1.0",
+    "next-auth": "^3.29.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-intl": "^5.20.10",
+    "swr": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@storybook/addon-a11y": "^6.3.7",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/react": "^6.3.7",
+    "autoprefixer": "^10.3.2",
+    "babel-loader": "^8.2.2",
+    "chromatic": "^5.9.2",
+    "cypress": "^8.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^11.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "postcss": "^8.3.6",
+    "prettier": "^2.3.2",
+    "storybook": "^6.3.7",
+    "tailwindcss": "^2.2.7",
+    "trim": "^0.0.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
