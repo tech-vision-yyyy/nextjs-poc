@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/client";
 
-import graphcms from "../../lib/graphcms";
+import graphcms from "../../../lib/graphcms";
 
 // TODO rate limiting
 export default async function handler(req, res) {
@@ -11,14 +11,16 @@ export default async function handler(req, res) {
       const projectName = req.body.projectName;
       const shortDescription = req.body.shortDescription;
       const description = req.body.description;
+      const assignedTo = session.user.email;
 
       const { issues } = await graphcms.request(
         `
-        mutation AddIssue($projectName: String, $shortDescription: String!, $description: String!) {
+        mutation AddIssue($projectName: String, $shortDescription: String!, $description: String!, $assignedTo: String!) {
           createIssue(data: {
             projectName: $projectName,
             shortDescription: $shortDescription,
-            description: $description
+            description: $description,
+            assignedTo: $assignedTo
           }) {
             id
           }
@@ -28,6 +30,7 @@ export default async function handler(req, res) {
           projectName,
           shortDescription,
           description,
+          assignedTo,
         }
       );
 

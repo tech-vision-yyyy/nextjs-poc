@@ -16,9 +16,9 @@ export default async function handler(req, res) {
         `
         mutation CreateTask($description: String!, $dueDate: Date!, $assignedTo: String!) {
           createTask(data: {
-              description: $description
-              dueDate: $dueDate
-              assignedTo: $assignedTo
+              description: $description,
+              dueDate: $dueDate,
+              assignedTo: $assignedTo,
               isCompleted: false
           }) {
             id

@@ -14,7 +14,7 @@ export default function Support() {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    await fetch(`/api/issues`, {
+    await fetch(`/api/issues/create`, {
       method: "POST",
       body: JSON.stringify({ projectName, shortDescription, description }),
       headers: {
