@@ -16,14 +16,15 @@ function set7DayDueDate() {
 }
 
 async function toggleTaskCompleted(id, isCompleted, mutate) {
-  mutate(
-    async (data) =>
-      data.map((t) => {
-        if (t.id === id) t.isCompleted = isCompleted;
-        return t;
-      }),
-    false
-  );
+  mutate(async (data) => {
+    let tasks = [...data];
+
+    const index = tasks.map((t) => t.id).indexOf(id);
+    const task = { ...tasks[index], isCompleted };
+    tasks[index] = task;
+
+    return [...tasks];
+  }, false);
 
   await fetch(`/api/tasks/completed`, {
     method: "POST",
@@ -106,7 +107,6 @@ export default function Tasks({ session }) {
                 <tr key={index}>
                   <td className="task-table-td text-center">
                     <label className="inline-flex items-center align-middle">
-                      {task.isCompleted.toString()}
                       <input
                         type="checkbox"
                         className="form-checkbox h-5 w-5 text-gray-600"
