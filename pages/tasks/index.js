@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { getSession } from "next-auth/client";
+import useSWR from "swr";
 
 import MainHeader from "../../components/MainHeader";
 import graphcms from "../../lib/graphcms";
@@ -47,6 +48,9 @@ async function addNewTask() {
 }
 
 export default function Tasks({ session, tasks }) {
+  const { data: tasks } = useSWR("/api/tasks/read");
+  console.log(`data ${JSON.stringify(tasks)}`);
+
   return (
     <div className="container mx-auto px-4">
       <Head>

@@ -7,31 +7,26 @@ export default async function handler(req, res) {
   const session = await getSession({ req });
 
   if (session) {
-    if (req.method === "POST") {
-      const id = req.body.id;
-      const isCompleted = req.body.isCompleted;
+    if (req.method === "GET") {
+      const assignedTo = session.user.email;
 
-      // TODO validate task is assigned to user.
-      const { task } = await graphcms.request(
+      const { tasks } = await graphcms.request(
         `
-        mutation ToggleTaskCompleted($id: ID!, $isCompleted: Boolean!) {
-          updateTask(
-            where: { id: $id },
-            data: { isCompleted: $isCompleted }
-          ) {
+        query GetTasks($assignedTo: String!) {
+          tasks(where: { assignedTo: $assignedTo }) {
             id
+            description
+            dueDate
             isCompleted
           }
-          publishTask(where: { id: $id }) { id }
         }
       `,
         {
-          id,
-          isCompleted,
+          assignedTo,
         }
       );
 
-      res.status(200).json(task);
+      res.status(200).json(tasks);
     } else {
       res.status(404).json({});
     }
