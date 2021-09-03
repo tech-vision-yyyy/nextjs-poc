@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/client";
 
 import MainHeader from "../../components/MainHeader";
-import truncate from "../../lib/truncate";
+import graphcms from "../../lib/graphcms";
 
 export default function BlogPost() {
   const [session] = useSession();
@@ -96,12 +96,17 @@ export default function BlogPost() {
 }
 
 export async function getStaticPaths() {
+  const { blogs } = await graphcms.request(`
+    query GetPostIDs {
+      blogs(where: {isVisible: true}) {
+        id
+      }
+    }
+  `);
+  const paths = blogs.map((p) => `/blog/${p.id}`);
+
   return {
-    paths: [
-      "/blog/ckt06w8zk0k0n0b37wb6p4lxt",
-      "/blog/ckt06vo5k0jgx0c19h4cfsxns",
-      "/blog/ckt06urqw0hso0b70nvvms6wv",
-    ],
+    paths,
     fallback: true,
   };
 }

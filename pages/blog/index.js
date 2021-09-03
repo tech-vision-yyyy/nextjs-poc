@@ -39,7 +39,14 @@ export default function Blog() {
           <div className="border-2 border-gray-200 rounded-md p-3 mb-6">
             <h2 className="text-green-400">Featured</h2>
             <div className="grid grid-cols-2 gap-2">
-              <Link href="/blog/ckt06vo5k0jgx0c19h4cfsxns">
+              <Link
+                href={`/blog/${
+                  data &&
+                  data.featuredPost &&
+                  data.featuredPost.length > 0 &&
+                  data.featuredPost[0].id
+                }`}
+              >
                 <a className="post-link">
                   <div>
                     <h2>
@@ -170,7 +177,6 @@ export async function getStaticProps() {
     }
   `
   );
-  console.log(featuredPost);
 
   return {
     props: {
