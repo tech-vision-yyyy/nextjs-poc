@@ -2,12 +2,26 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/client";
+import useSWR from "swr";
 
 import MainHeader from "../../components/MainHeader";
 import truncate from "../../lib/truncate";
+import graphcms from "../../lib/graphcms";
+import fetcher from "../../lib/fetcher";
 
 export default function Blog() {
   const [session] = useSession();
+
+  const { data: posts, error } = useSWR("/api/blog/read", (url) =>
+    fetcher(url, { method: "GET" })
+  );
+
+  if (!error && !posts) {
+    <p>Loading...</p>;
+  }
+  if (error) {
+    <p>Error</p>;
+  }
 
   return (
     <div className="container mx-auto px-4">
@@ -177,10 +191,28 @@ export default function Blog() {
 }
 
 export async function getStaticProps() {
+  const { blogs: posts } = await graphcms.request(
+    `
+    query GetPosts {
+      blogs(first: 4, orderBy: releasedAt_DESC, where: {isVisible: true}) {
+        title
+        content
+        category
+        releasedAt
+        id
+      }
+    }
+  `
+  );
+
   return {
-    props: {},
+    props: {
+      fallback: {
+        "/api/blog/read": posts,
+      },
+    },
     // Seconds after which a page re-generation can occur
-    revalidate: 30,
+    revalidate: 60 * 60 * 12,
   };
 }
 
