@@ -2,12 +2,25 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/client";
+import useSWR from "swr";
 
 import MainHeader from "../../components/MainHeader";
 import graphcms from "../../lib/graphcms";
+import fetcher from "../../lib/fetcher";
 
 export default function BlogPost() {
   const [session] = useSession();
+
+  const { data, error } = useSWR("/api/blog/readPost", (url) =>
+    fetcher(url, { method: "GET" })
+  );
+
+  if (!error && !data) {
+    <p>Loading...</p>;
+  }
+  if (error) {
+    <p>Error</p>;
+  }
 
   return (
     <div className="container mx-auto px-4">
@@ -111,11 +124,34 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
+  const { id } = context.params;
+  const { blogs } = await graphcms.request(
+    `
+      query GetPost($id: ID!) {
+        blogs(where: { id: $id }) {
+          title
+          content
+          category
+          releasedAt
+          id
+        }
+      }
+    `,
+    {
+      id,
+    }
+  );
+  console.log(`ID ${id}`);
+
   return {
-    props: {},
+    props: {
+      fallback: {
+        "/api/blog/readPost": blogs[0],
+      },
+    },
     // Seconds after which a page re-generation can occur
-    revalidate: 30,
+    revalidate: 60 * 60 * 12,
   };
 }
 

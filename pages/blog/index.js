@@ -12,7 +12,7 @@ import fetcher from "../../lib/fetcher";
 export default function Blog() {
   const [session] = useSession();
 
-  const { data, error } = useSWR("/api/blog/read", (url) =>
+  const { data, error } = useSWR("/api/blog/readAll", (url) =>
     fetcher(url, { method: "GET" })
   );
   data && console.log(`data ${JSON.stringify(data.featuredPost)}`);
@@ -181,11 +181,11 @@ export async function getStaticProps() {
   return {
     props: {
       fallback: {
-        "/api/blog/read": { featuredPost, blogs },
+        "/api/blog/readAll": { featuredPost, blogs },
       },
     },
     // Seconds after which a page re-generation can occur
-    revalidate: 60 * 60 * 12,
+    revalidate: 60 * 60 * 6,
   };
 }
 
