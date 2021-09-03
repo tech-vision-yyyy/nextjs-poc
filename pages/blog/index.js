@@ -12,11 +12,12 @@ import fetcher from "../../lib/fetcher";
 export default function Blog() {
   const [session] = useSession();
 
-  const { data: posts, error } = useSWR("/api/blog/read", (url) =>
+  const { data, error } = useSWR("/api/blog/read", (url) =>
     fetcher(url, { method: "GET" })
   );
+  data && console.log(`data ${JSON.stringify(data.featuredPost)}`);
 
-  if (!error && !posts) {
+  if (!error && !data) {
     <p>Loading...</p>;
   }
   if (error) {
@@ -41,15 +42,28 @@ export default function Blog() {
               <Link href="/blog/ckt06vo5k0jgx0c19h4cfsxns">
                 <a className="post-link">
                   <div>
-                    <h2>4 Ways to Build a Successful AI Startup</h2>
+                    <h2>
+                      {data &&
+                        data.featuredPost &&
+                        data.featuredPost.length > 0 &&
+                        data.featuredPost[0].title}
+                    </h2>
                     <span className="text-gray-400">
-                      MM-DD-YYYY | Technology
+                      {data &&
+                        data.featuredPost &&
+                        data.featuredPost.length > 0 &&
+                        data.featuredPost[0].releasedAt}{" "}
+                      |{" "}
+                      {data &&
+                        data.featuredPost &&
+                        data.featuredPost.length > 0 &&
+                        data.featuredPost[0].category}
                     </span>
                     <p>
-                      {truncate(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                        250
-                      )}
+                      {data &&
+                        data.featuredPost &&
+                        data.featuredPost.length > 0 &&
+                        truncate(data.featuredPost[0].content, 500)}
                     </p>
                   </div>
                 </a>
@@ -62,61 +76,6 @@ export default function Blog() {
                 layout="responsive"
                 alt="Technology"
               ></Image>
-            </div>
-          </div>
-        </div>
-        <div className="favorites-section">
-          <div className="bg-yellow-100 p-3">
-            <h2>Favorites</h2>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid-flow-row auto-rows-max">
-              <Link href="/blog/ckt06w8zk0k0n0b37wb6p4lxt">
-                <a className="post-link">
-                  <div className="p-3">
-                    <h3>4 Ways to Build a Successful AI Startup</h3>
-                    <span className="text-gray-600">
-                      MM-DD-YYYY | Technology
-                    </span>
-                    <p>
-                      {truncate(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                        250
-                      )}
-                    </p>
-                  </div>
-                </a>
-              </Link>
-              <Link href="/blog/ckt06w8zk0k0n0b37wb6p4lxt">
-                <a className="post-link">
-                  <div className="p-3">
-                    <h3>4 Ways to Build a Successful AI Startup</h3>
-                    <span className="text-gray-600">
-                      MM-DD-YYYY | Technology
-                    </span>
-                    <p>
-                      {truncate(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                        250
-                      )}
-                    </p>
-                  </div>
-                </a>
-              </Link>
-              <Link href="/blog/ckt06w8zk0k0n0b37wb6p4lxt">
-                <a className="post-link">
-                  <div className="p-3">
-                    <h3>4 Ways to Build a Successful AI Startup</h3>
-                    <span className="text-gray-600">
-                      MM-DD-YYYY | Technology
-                    </span>
-                    <p>
-                      {truncate(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                        250
-                      )}
-                    </p>
-                  </div>
-                </a>
-              </Link>
             </div>
           </div>
         </div>
@@ -191,9 +150,16 @@ export default function Blog() {
 }
 
 export async function getStaticProps() {
-  const { blogs: posts } = await graphcms.request(
+  const { featuredPost, blogs } = await graphcms.request(
     `
     query GetPosts {
+      featuredPost: blogs(first: 1, where: {isFeatured: true}) {
+        title
+        content
+        category
+        releasedAt
+        id
+      }
       blogs(first: 4, orderBy: releasedAt_DESC, where: {isVisible: true}) {
         title
         content
@@ -204,11 +170,12 @@ export async function getStaticProps() {
     }
   `
   );
+  console.log(featuredPost);
 
   return {
     props: {
       fallback: {
-        "/api/blog/read": posts,
+        "/api/blog/read": { featuredPost, blogs },
       },
     },
     // Seconds after which a page re-generation can occur
