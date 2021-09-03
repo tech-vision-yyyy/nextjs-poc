@@ -152,28 +152,30 @@ export async function getServerSideProps(context) {
   if (!session) {
     return { redirect: { destination: "/", permanent: false } };
   } else {
-    // const { tasks } = await graphcms.request(
-    //   `
-    //   query GetTasks($assignedTo: String!) {
-    //     tasks(where: { assignedTo: $assignedTo }) {
-    //       id
-    //       description
-    //       dueDate
-    //       isCompleted
-    //     }
-    //   }
-    // `,
-    //   {
-    //     assignedTo: session.user.email,
-    //   }
-    // );
+    const assignedTo = session.user.email;
+
+    const { tasks } = await graphcms.request(
+      `
+      query GetTasks($assignedTo: String!) {
+        tasks(where: { assignedTo: $assignedTo }) {
+          id
+          description
+          dueDate
+          isCompleted
+        }
+      }
+    `,
+      {
+        assignedTo,
+      }
+    );
 
     return {
       props: {
         session,
-        // fallback: {
-        //   "/api/tasks/read": tasks,
-        // },
+        fallback: {
+          "/api/tasks/read": tasks,
+        },
       },
     };
   }
