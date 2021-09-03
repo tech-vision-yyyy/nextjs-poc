@@ -76,4 +76,9 @@
   .btn-loadMore {
     @apply text-white bg-gray-600 rounded-md px-6 py-3 hover:bg-gray-800;
   }
+
+  .post-link > div > h2,
+  h3 {
+    @apply hover:underline;
+  }
 }

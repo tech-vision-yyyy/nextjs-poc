@@ -24,16 +24,22 @@ export default function Blog() {
           <div className="border-2 border-gray-200 rounded-md p-3 mb-6">
             <h2 className="text-green-400">Featured</h2>
             <div className="grid grid-cols-2 gap-2">
-              <div>
-                <h2>4 Ways to Build a Successful AI Startup</h2>
-                <span className="text-gray-400">MM-DD-YYYY | Technology</span>
-                <p>
-                  {truncate(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                    250
-                  )}
-                </p>
-              </div>
+              <Link href="/blog/ckt06vo5k0jgx0c19h4cfsxns">
+                <a className="post-link">
+                  <div>
+                    <h2>4 Ways to Build a Successful AI Startup</h2>
+                    <span className="text-gray-400">
+                      MM-DD-YYYY | Technology
+                    </span>
+                    <p>
+                      {truncate(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
+                        250
+                      )}
+                    </p>
+                  </div>
+                </a>
+              </Link>
               <Image
                 src="https://images.ctfassets.net/hrltx12pl8hq/zpozZxV0PvBUevOlUkpEK/220a46578f42ba182231eb7d91051f61/04-technology_1218220324.jpg"
                 width="480"
@@ -49,82 +55,116 @@ export default function Blog() {
           <div className="bg-yellow-100 p-3">
             <h2>Favorites</h2>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid-flow-row auto-rows-max">
-              <div className="p-3">
-                <h3>4 Ways to Build a Successful AI Startup</h3>
-                <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-                <p>
-                  {truncate(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                    250
-                  )}
-                </p>
-              </div>
-              <div className="p-3">
-                <h3>4 Ways to Build a Successful AI Startup</h3>
-                <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-                <p>
-                  {truncate(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                    250
-                  )}
-                </p>
-              </div>
-              <div className="p-3">
-                <h3>4 Ways to Build a Successful AI Startup</h3>
-                <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-                <p>
-                  {truncate(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                    250
-                  )}
-                </p>
-              </div>
+              <Link href="/blog/ckt06w8zk0k0n0b37wb6p4lxt">
+                <a className="post-link">
+                  <div className="p-3">
+                    <h3>4 Ways to Build a Successful AI Startup</h3>
+                    <span className="text-gray-600">
+                      MM-DD-YYYY | Technology
+                    </span>
+                    <p>
+                      {truncate(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
+                        250
+                      )}
+                    </p>
+                  </div>
+                </a>
+              </Link>
+              <Link href="/blog/ckt06w8zk0k0n0b37wb6p4lxt">
+                <a className="post-link">
+                  <div className="p-3">
+                    <h3>4 Ways to Build a Successful AI Startup</h3>
+                    <span className="text-gray-600">
+                      MM-DD-YYYY | Technology
+                    </span>
+                    <p>
+                      {truncate(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
+                        250
+                      )}
+                    </p>
+                  </div>
+                </a>
+              </Link>
+              <Link href="/blog/ckt06w8zk0k0n0b37wb6p4lxt">
+                <a className="post-link">
+                  <div className="p-3">
+                    <h3>4 Ways to Build a Successful AI Startup</h3>
+                    <span className="text-gray-600">
+                      MM-DD-YYYY | Technology
+                    </span>
+                    <p>
+                      {truncate(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
+                        250
+                      )}
+                    </p>
+                  </div>
+                </a>
+              </Link>
             </div>
           </div>
         </div>
         <div className="recent-section">
           <h2>Recent</h2>
           <div className="grid grid-flow-row auto-rows-max">
-            <div className="p-3">
-              <h3>4 Ways to Build a Successful AI Startup</h3>
-              <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-              <p>
-                {truncate(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                  250
-                )}
-              </p>
-            </div>
-            <div className="p-3">
-              <h3>4 Ways to Build a Successful AI Startup</h3>
-              <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-              <p>
-                {truncate(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                  250
-                )}
-              </p>
-            </div>
-            <div className="p-3">
-              <h3>4 Ways to Build a Successful AI Startup</h3>
-              <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-              <p>
-                {truncate(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                  250
-                )}
-              </p>
-            </div>
-            <div className="p-3">
-              <h3>4 Ways to Build a Successful AI Startup</h3>
-              <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-              <p>
-                {truncate(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                  250
-                )}
-              </p>
-            </div>
+            <Link href="/blog/ckt06urqw0hso0b70nvvms6wv">
+              <a className="post-link">
+                <div className="p-3">
+                  <h3>4 Ways to Build a Successful AI Startup</h3>
+                  <span className="text-gray-600">MM-DD-YYYY | Technology</span>
+                  <p>
+                    {truncate(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
+                      250
+                    )}
+                  </p>
+                </div>
+              </a>
+            </Link>
+            <Link href="/blog/ckt06urqw0hso0b70nvvms6wv">
+              <a className="post-link">
+                <div className="p-3">
+                  <h3>4 Ways to Build a Successful AI Startup</h3>
+                  <span className="text-gray-600">MM-DD-YYYY | Technology</span>
+                  <p>
+                    {truncate(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
+                      250
+                    )}
+                  </p>
+                </div>
+              </a>
+            </Link>
+            <Link href="/blog/ckt06urqw0hso0b70nvvms6wv">
+              <a className="post-link">
+                <div className="p-3">
+                  <h3>4 Ways to Build a Successful AI Startup</h3>
+                  <span className="text-gray-600">MM-DD-YYYY | Technology</span>
+                  <p>
+                    {truncate(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
+                      250
+                    )}
+                  </p>
+                </div>
+              </a>
+            </Link>
+            <Link href="/blog/ckt06urqw0hso0b70nvvms6wv">
+              <a className="post-link">
+                <div className="p-3">
+                  <h3>4 Ways to Build a Successful AI Startup</h3>
+                  <span className="text-gray-600">MM-DD-YYYY | Technology</span>
+                  <p>
+                    {truncate(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
+                      250
+                    )}
+                  </p>
+                </div>
+              </a>
+            </Link>
           </div>
 
           <button className="btn-loadMore justify-self-auto w-full mt-4 mb-20">
