@@ -5,7 +5,6 @@ import useSWR from "swr";
 
 import MainHeader from "../../components/MainHeader";
 import graphcms from "../../lib/graphcms";
-import fetcher from "../../lib/fetcher";
 
 async function toggleTaskCompleted(id, isCompleted) {
   await fetch(`/api/tasks/completed`, {
@@ -49,8 +48,7 @@ async function addNewTask() {
 }
 
 export default function Tasks({ session }) {
-  const { data: tasks } = useSWR("/api/tasks/read", fetcher);
-  console.log(`data ${JSON.stringify(tasks)}`);
+  const { data: tasks } = useSWR("/api/tasks/read");
 
   return (
     <div className="container mx-auto px-4">
@@ -130,7 +128,9 @@ export async function getServerSideProps(context) {
     return {
       props: {
         session,
-        tasks,
+        fallback: {
+          "/api/tasks/read": tasks,
+        },
       },
     };
   }

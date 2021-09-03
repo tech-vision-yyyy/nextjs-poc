@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
 import { Provider } from "next-auth/client";
 import { IntlProvider } from "react-intl";
-import { SWRConfig } from "swr";
 
+import SWRConfig from "../lib/swr-config";
 import NextAuth from "../lib/next-auth";
-import fetcher from "../lib/fetcher";
 import Messages from "../i18n/Messages";
 import "../styles/globals.css";
 
@@ -20,12 +19,7 @@ function MyApp({ Component, pageProps }) {
           messages={Messages[router.locale]}
           defaultLocale="en-US"
         >
-          <SWRConfig
-            value={{
-              fallback: pageProps.fallback,
-              fetcher,
-            }}
-          >
+          <SWRConfig {...pageProps}>
             {Component.auth ? (
               <NextAuth>
                 <Component {...pageProps} />
