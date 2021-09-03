@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { Provider } from "next-auth/client";
 import { IntlProvider } from "react-intl";
-import { Provider, useSession, signIn } from "next-auth/client";
 import { SWRConfig } from "swr";
 
+import NextAuth from "../lib/next-auth";
 import fetcher from "../lib/fetcher";
 import Messages from "../i18n/Messages";
 import "../styles/globals.css";
@@ -27,9 +27,9 @@ function MyApp({ Component, pageProps }) {
             }}
           >
             {Component.auth ? (
-              <Auth>
+              <NextAuth>
                 <Component {...pageProps} />
-              </Auth>
+              </NextAuth>
             ) : (
               <Component {...pageProps} />
             )}
@@ -38,22 +38,6 @@ function MyApp({ Component, pageProps }) {
       </Provider>
     </>
   );
-}
-
-function Auth({ children }) {
-  const [session, loading] = useSession();
-  const isUser = !!session?.user;
-  useEffect(() => {
-    if (loading) return;
-    if (!isUser) {
-      signIn("okta", { callbackUrl: "/home" });
-    }
-  }, [isUser, loading]);
-
-  if (isUser) {
-    return children;
-  }
-  return <div>Loading...</div>;
 }
 
 export default MyApp;

@@ -5,6 +5,7 @@ import useSWR from "swr";
 
 import MainHeader from "../../components/MainHeader";
 import graphcms from "../../lib/graphcms";
+import fetcher from "../../lib/fetcher";
 
 async function toggleTaskCompleted(id, isCompleted) {
   await fetch(`/api/tasks/completed`, {
@@ -47,8 +48,8 @@ async function addNewTask() {
   location.reload();
 }
 
-export default function Tasks({ session, tasks }) {
-  const { data: tasks } = useSWR("/api/tasks/read");
+export default function Tasks({ session }) {
+  const { data: tasks } = useSWR("/api/tasks/read", fetcher);
   console.log(`data ${JSON.stringify(tasks)}`);
 
   return (
