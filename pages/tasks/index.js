@@ -5,8 +5,26 @@ import useSWR from "swr";
 
 import MainHeader from "../../components/MainHeader";
 import graphcms from "../../lib/graphcms";
+import fetcher from "../../lib/fetcher";
 
-async function toggleTaskCompleted(id, isCompleted) {
+function set7DayDueDate() {
+  let date = new Date();
+  date.setDate(date.getDate() + 7);
+  return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${(
+    "0" + date.getDate()
+  ).slice(-2)}`;
+}
+
+async function toggleTaskCompleted(id, isCompleted, mutate) {
+  mutate(
+    async (data) =>
+      data.map((t) => {
+        if (t.id === id) t.isCompleted = isCompleted;
+        return t;
+      }),
+    false
+  );
+
   await fetch(`/api/tasks/completed`, {
     method: "POST",
     body: JSON.stringify({ id, isCompleted }),
@@ -14,12 +32,11 @@ async function toggleTaskCompleted(id, isCompleted) {
       "Content-Type": "application/json",
     },
   });
-
-  // TODO optimistic update of State
-  location.reload();
 }
 
-async function deleteTask(id) {
+async function deleteTask(id, mutate) {
+  mutate(async (data) => data.filter((t) => t.id !== id), false);
+
   await fetch(`/api/tasks/delete`, {
     method: "POST",
     body: JSON.stringify({ id }),
@@ -27,28 +44,41 @@ async function deleteTask(id) {
       "Content-Type": "application/json",
     },
   });
-
-  // TODO optimistic update of State
-  location.reload();
 }
 
-async function addNewTask() {
+async function addNewTask(assignedTo, mutate) {
   const description = prompt("Please enter a description:");
+  const dueDate = set7DayDueDate();
+
+  mutate(
+    async (data) => [...data, { description, dueDate, assignedTo }],
+    false
+  );
 
   await fetch(`/api/tasks/create`, {
     method: "POST",
-    body: JSON.stringify({ description }),
+    body: JSON.stringify({ description, dueDate, assignedTo }),
     headers: {
       "Content-Type": "application/json",
     },
   });
 
-  // TODO optimistic update of State
-  location.reload();
+  mutate();
 }
 
 export default function Tasks({ session }) {
-  const { data: tasks } = useSWR("/api/tasks/read");
+  const {
+    data: tasks,
+    error,
+    mutate,
+  } = useSWR("/api/tasks/read", (url) => fetcher(url, { method: "GET" }));
+
+  if (!error && !tasks) {
+    <p>Loading...</p>;
+  }
+  if (error) {
+    <p>Error</p>;
+  }
 
   return (
     <div className="container mx-auto px-4">
@@ -71,31 +101,44 @@ export default function Tasks({ session }) {
             </tr>
           </thead>
           <tbody>
-            {tasks.map((task, index) => (
-              <tr key={index}>
-                <td className="task-table-td text-center">
-                  <label className="inline-flex items-center align-middle">
-                    <input
-                      type="checkbox"
-                      className="form-checkbox h-5 w-5 text-gray-600"
-                      checked={task.isCompleted ? true : false}
-                      onChange={(e) =>
-                        toggleTaskCompleted(task.id, !task.isCompleted)
-                      }
-                    />
-                  </label>
-                </td>
-                <td className="task-table-td task-text">{task.description}</td>
-                <td className="task-table-td task-dueDate">{task.dueDate}</td>
-                <td className="task-table-td task-delete">
-                  <button onClick={(e) => deleteTask(task.id)}>x</button>
-                </td>
-              </tr>
-            ))}
+            {tasks &&
+              tasks.map((task, index) => (
+                <tr key={index}>
+                  <td className="task-table-td text-center">
+                    <label className="inline-flex items-center align-middle">
+                      {task.isCompleted.toString()}
+                      <input
+                        type="checkbox"
+                        className="form-checkbox h-5 w-5 text-gray-600"
+                        checked={task.isCompleted ? true : false}
+                        onChange={(e) =>
+                          toggleTaskCompleted(
+                            task.id,
+                            !task.isCompleted,
+                            mutate
+                          )
+                        }
+                      />
+                    </label>
+                  </td>
+                  <td className="task-table-td task-text">
+                    {task.description}
+                  </td>
+                  <td className="task-table-td task-dueDate">{task.dueDate}</td>
+                  <td className="task-table-td task-delete">
+                    <button onClick={(e) => deleteTask(task.id, mutate)}>
+                      x
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
-        <button className="btn-submit mt-6" onClick={(e) => addNewTask()}>
+        <button
+          className="btn-submit mt-6"
+          onClick={(e) => addNewTask(session.user.email, mutate)}
+        >
           New Task
         </button>
       </div>
@@ -109,28 +152,28 @@ export async function getServerSideProps(context) {
   if (!session) {
     return { redirect: { destination: "/", permanent: false } };
   } else {
-    const { tasks } = await graphcms.request(
-      `
-      query GetTasks($assignedTo: String!) {
-        tasks(where: { assignedTo: $assignedTo }) {
-          id
-          description
-          dueDate
-          isCompleted
-        }
-      }
-    `,
-      {
-        assignedTo: session.user.email,
-      }
-    );
+    // const { tasks } = await graphcms.request(
+    //   `
+    //   query GetTasks($assignedTo: String!) {
+    //     tasks(where: { assignedTo: $assignedTo }) {
+    //       id
+    //       description
+    //       dueDate
+    //       isCompleted
+    //     }
+    //   }
+    // `,
+    //   {
+    //     assignedTo: session.user.email,
+    //   }
+    // );
 
     return {
       props: {
         session,
-        fallback: {
-          "/api/tasks/read": tasks,
-        },
+        // fallback: {
+        //   "/api/tasks/read": tasks,
+        // },
       },
     };
   }

@@ -9,10 +9,9 @@ export default async function handler(req, res) {
   if (session) {
     if (req.method === "POST") {
       const description = req.body.description;
-      const dueDate = "2021-09-15";
+      const dueDate = req.body.dueDate;
       const assignedTo = session.user.email;
 
-      // TODO validate task is assigned to user.
       const task = await graphcms.request(
         `
         mutation CreateTask($description: String!, $dueDate: Date!, $assignedTo: String!) {
