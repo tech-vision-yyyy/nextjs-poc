@@ -22,7 +22,6 @@ export default function BlogPost() {
     fetcher(url, { method: "GET" })
   );
 
-  return <PostLoading title={title} email={session.user.email}></PostLoading>;
   if (!error && !data) {
     return <PostLoading title={title} email={session.user.email}></PostLoading>;
   }
