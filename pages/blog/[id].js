@@ -5,9 +5,13 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
 import useSWR from "swr";
 
+import PostLoading from "../../components/PostLoading";
 import MainHeader from "../../components/MainHeader";
+
 import graphcms from "../../lib/graphcms";
 import fetcher from "../../lib/fetcher";
+
+const title = "Blog Post";
 
 export default function BlogPost() {
   const [session] = useSession();
@@ -18,8 +22,9 @@ export default function BlogPost() {
     fetcher(url, { method: "GET" })
   );
 
+  return <PostLoading title={title} email={session.user.email}></PostLoading>;
   if (!error && !data) {
-    return <p>Loading...</p>;
+    return <PostLoading title={title} email={session.user.email}></PostLoading>;
   }
   if (error) {
     return <p>Error</p>;
@@ -28,7 +33,7 @@ export default function BlogPost() {
   return (
     <div className="container mx-auto px-4">
       <Head>
-        <title>Blog Post</title>
+        <title>{title}</title>
       </Head>
       <MainHeader email={session.user.email}></MainHeader>
       <h1 className="my-3">Blog Post</h1>

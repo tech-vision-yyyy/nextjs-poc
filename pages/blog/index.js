@@ -4,10 +4,14 @@ import Image from "next/image";
 import { useSession } from "next-auth/client";
 import useSWR from "swr";
 
+import BlogLoading from "../../components/BlogLoading";
 import MainHeader from "../../components/MainHeader";
+
 import truncate from "../../lib/truncate";
 import graphcms from "../../lib/graphcms";
 import fetcher from "../../lib/fetcher";
+
+const title = "Blog";
 
 export default function Blog() {
   const [session] = useSession();
@@ -17,7 +21,7 @@ export default function Blog() {
   );
 
   if (!error && !data) {
-    return <p>Loading...</p>;
+    return <BlogLoading title={title} email={session.user.email}></BlogLoading>;
   }
   if (error) {
     return <p>Error</p>;
@@ -26,7 +30,7 @@ export default function Blog() {
   return (
     <div className="container mx-auto px-4">
       <Head>
-        <title>Blog</title>
+        <title>{title}</title>
       </Head>
       <MainHeader email={session.user.email}></MainHeader>
       <h1 className="my-3">Blog</h1>
