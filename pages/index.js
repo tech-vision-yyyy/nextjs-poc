@@ -35,7 +35,7 @@ export default function Index() {
           <FormattedMessage
             id="index.welcome"
             defaultMessage="Welcome to a Next.js Demo!"
-          ></FormattedMessage>{" "}
+          ></FormattedMessage>
         </h1>
 
         <p className={styles.description}>
