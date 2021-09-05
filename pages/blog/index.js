@@ -20,7 +20,6 @@ export default function Blog() {
     fetcher(url, { method: "GET" })
   );
 
-  // return <BlogLoading title={title} email={session.user.email}></BlogLoading>;
   if (!error && !data) {
     return <BlogLoading title={title} email={session.user.email}></BlogLoading>;
   }
