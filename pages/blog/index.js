@@ -88,21 +88,23 @@ export default function Blog() {
         <div className="recent-section">
           <h2>Recent</h2>
           <div className="grid grid-flow-row auto-rows-max">
-            {data.blogs.map((post, index) => {
-              return (
-                <Link href={`/blog/${post.id}`} key={index}>
-                  <a className="post-link">
-                    <div className="p-3">
-                      <h3>{post.title}</h3>
-                      <span className="text-gray-600">
-                        {post.releasedAt} | {post.category}
-                      </span>
-                      <p>{truncate(post.content, 250)}</p>
-                    </div>
-                  </a>
-                </Link>
-              );
-            })}
+            {data &&
+              data.blogs &&
+              data.blogs.map((post, index) => {
+                return (
+                  <Link href={`/blog/${post.id}`} key={index}>
+                    <a className="post-link">
+                      <div className="p-3">
+                        <h3>{post.title}</h3>
+                        <span className="text-gray-600">
+                          {post.releasedAt} | {post.category}
+                        </span>
+                        <p>{truncate(post.content, 250)}</p>
+                      </div>
+                    </a>
+                  </Link>
+                );
+              })}
           </div>
 
           <button className="btn-loadMore justify-self-auto w-full mt-4 mb-20">

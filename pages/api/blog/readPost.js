@@ -8,10 +8,10 @@ export default async function handler(req, res) {
 
   if (session) {
     if (req.method === "GET") {
-      const { blogs } = await graphcms.request(
+      const { post } = await graphcms.request(
         `
           query GetPost($id: ID!) {
-            blogs(where: { id: $id }) {
+            post: blogs(where: { id: $id }) {
               title
               content
               category
@@ -21,13 +21,11 @@ export default async function handler(req, res) {
           }
         `,
         {
-          // TODO send ID to the API Route
-          // id: req.id,
+          id: req.query.id,
         }
       );
-      console.log(JSON.stringify({ ...blogs[0] }));
 
-      res.status(200).json({ ...blogs[0] });
+      res.status(200).json({ post: post[0] });
     } else {
       res.status(404).json({});
     }
