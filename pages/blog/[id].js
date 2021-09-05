@@ -19,10 +19,10 @@ export default function BlogPost() {
   );
 
   if (!error && !data) {
-    <p>Loading...</p>;
+    return <p>Loading...</p>;
   }
   if (error) {
-    <p>Error</p>;
+    return <p>Error</p>;
   }
 
   return (
