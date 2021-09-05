@@ -12,10 +12,9 @@ import fetcher from "../../lib/fetcher";
 export default function Blog() {
   const [session] = useSession();
 
-  const { data, error } = useSWR("/api/blog/readAll", (url) =>
+  const { data, error } = useSWR("/api/blog", (url) =>
     fetcher(url, { method: "GET" })
   );
-  data && console.log(`data ${JSON.stringify(data.featuredPost)}`);
 
   if (!error && !data) {
     <p>Loading...</p>;
@@ -89,62 +88,21 @@ export default function Blog() {
         <div className="recent-section">
           <h2>Recent</h2>
           <div className="grid grid-flow-row auto-rows-max">
-            <Link href="/blog/ckt06urqw0hso0b70nvvms6wv">
-              <a className="post-link">
-                <div className="p-3">
-                  <h3>4 Ways to Build a Successful AI Startup</h3>
-                  <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-                  <p>
-                    {truncate(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                      250
-                    )}
-                  </p>
-                </div>
-              </a>
-            </Link>
-            <Link href="/blog/ckt06urqw0hso0b70nvvms6wv">
-              <a className="post-link">
-                <div className="p-3">
-                  <h3>4 Ways to Build a Successful AI Startup</h3>
-                  <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-                  <p>
-                    {truncate(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                      250
-                    )}
-                  </p>
-                </div>
-              </a>
-            </Link>
-            <Link href="/blog/ckt06urqw0hso0b70nvvms6wv">
-              <a className="post-link">
-                <div className="p-3">
-                  <h3>4 Ways to Build a Successful AI Startup</h3>
-                  <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-                  <p>
-                    {truncate(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                      250
-                    )}
-                  </p>
-                </div>
-              </a>
-            </Link>
-            <Link href="/blog/ckt06urqw0hso0b70nvvms6wv">
-              <a className="post-link">
-                <div className="p-3">
-                  <h3>4 Ways to Build a Successful AI Startup</h3>
-                  <span className="text-gray-600">MM-DD-YYYY | Technology</span>
-                  <p>
-                    {truncate(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel aliquet nunc. Nam in sollicitudin magna, a lacinia augue. Nam posuere cursus auctor. Sed dapibus sollicitudin turpis, nec tincidunt nunc auctor in. Maecenas egestas mattis sem, dignissim tincidunt lectus ullamcorper sed. Maecenas pulvinar",
-                      250
-                    )}
-                  </p>
-                </div>
-              </a>
-            </Link>
+            {data.blogs.map((post, index) => {
+              return (
+                <Link href={`/blog/${post.id}`} key={index}>
+                  <a className="post-link">
+                    <div className="p-3">
+                      <h3>{post.title}</h3>
+                      <span className="text-gray-600">
+                        {post.releasedAt} | {post.category}
+                      </span>
+                      <p>{truncate(post.content, 250)}</p>
+                    </div>
+                  </a>
+                </Link>
+              );
+            })}
           </div>
 
           <button className="btn-loadMore justify-self-auto w-full mt-4 mb-20">
@@ -181,7 +139,7 @@ export async function getStaticProps() {
   return {
     props: {
       fallback: {
-        "/api/blog/readAll": { featuredPost, blogs },
+        "/api/blog": { featuredPost, blogs },
       },
     },
     // Seconds after which a page re-generation can occur
