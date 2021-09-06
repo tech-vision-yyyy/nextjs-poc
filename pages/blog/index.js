@@ -14,9 +14,24 @@ import fetcher from "../../lib/fetcher";
 const title = "Blog";
 
 async function loadMorePosts(endCursor, mutate) {
-  alert("Loading...");
-  // TODO query /api/blog/loadMore see Tasks Page
-  // TODO mutate data
+  const response = await fetch(`/api/blog/loadMore?endCursor=${endCursor}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const morePosts = await response.json();
+  // console.log(`morePosts ${JSON.stringify(morePosts)}`);
+  //=> blogsConnection
+  //=> pageInfo
+
+  mutate(async (data) => {
+    return {};
+    // let postData = {...data};
+    // postData.blogsConnection.blogs.push(morePosts.blogsConnection);
+    // postData.blogsConnection.pageInfo = {...postData.blogsConnection.pageInfo, ...morePosts.pageInfo};
+    // console.log(`POST DATA ${JSON.stringify(postData.blogsConnection)}`);
+    // return postData;
+  }, false);
 }
 
 export default function Blog() {
@@ -44,63 +59,67 @@ export default function Blog() {
         <a className="simple-link">Back</a>
       </Link>
       <div className="mt-6">
-        <div className="featured-section">
-          <div className="border-2 border-gray-200 rounded-md p-3 mb-6">
-            <h2 className="text-green-400">Featured</h2>
-            <div className="grid grid-cols-2 gap-2">
-              <Link
-                href={`/blog/${
-                  data &&
-                  data.featuredPost &&
-                  data.featuredPost.length > 0 &&
-                  data.featuredPost[0].id
-                }`}
-              >
-                <a className="post-link">
-                  <div>
-                    <h2>
-                      {data &&
-                        data.featuredPost &&
-                        data.featuredPost.length > 0 &&
-                        data.featuredPost[0].title}
-                    </h2>
-                    <span className="text-gray-400">
-                      {data &&
-                        data.featuredPost &&
-                        data.featuredPost.length > 0 &&
-                        data.featuredPost[0].releasedAt}{" "}
-                      |{" "}
-                      {data &&
-                        data.featuredPost &&
-                        data.featuredPost.length > 0 &&
-                        data.featuredPost[0].category}
-                    </span>
-                    <p>
-                      {data &&
-                        data.featuredPost &&
-                        data.featuredPost.length > 0 &&
-                        truncate(data.featuredPost[0].content, 500)}
-                    </p>
-                  </div>
-                </a>
-              </Link>
-              <Image
-                src={
-                  data &&
-                  data.featuredPost &&
-                  data.featuredPost.length > 0 &&
-                  data.featuredPost[0].image &&
-                  data.featuredPost[0].image.url
-                }
-                width="600"
-                height="400"
-                className="rounded-md"
-                layout="intrinsic"
-                alt="Technology"
-              ></Image>
+        {data && data.featuredPost && data.featuredPost.length > 0 ? (
+          <div className="featured-section">
+            <div className="border-2 border-gray-200 rounded-md p-3 mb-6">
+              <h2 className="text-green-400">Featured</h2>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href={`/blog/${
+                    data &&
+                    data.featuredPost &&
+                    data.featuredPost.length > 0 &&
+                    data.featuredPost[0].id
+                  }`}
+                >
+                  <a className="post-link">
+                    <div>
+                      <h2>
+                        {data &&
+                          data.featuredPost &&
+                          data.featuredPost.length > 0 &&
+                          data.featuredPost[0].title}
+                      </h2>
+                      <span className="text-gray-400">
+                        {data &&
+                          data.featuredPost &&
+                          data.featuredPost.length > 0 &&
+                          data.featuredPost[0].releasedAt}{" "}
+                        |{" "}
+                        {data &&
+                          data.featuredPost &&
+                          data.featuredPost.length > 0 &&
+                          data.featuredPost[0].category}
+                      </span>
+                      <p>
+                        {data &&
+                          data.featuredPost &&
+                          data.featuredPost.length > 0 &&
+                          truncate(data.featuredPost[0].content, 500)}
+                      </p>
+                    </div>
+                  </a>
+                </Link>
+                <Image
+                  src={
+                    data &&
+                    data.featuredPost &&
+                    data.featuredPost.length > 0 &&
+                    data.featuredPost[0].image &&
+                    data.featuredPost[0].image.url
+                  }
+                  width="600"
+                  height="400"
+                  className="rounded-md"
+                  layout="intrinsic"
+                  alt="Technology"
+                ></Image>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
         <div className="recent-section">
           <h2>Recent</h2>
           <div className="grid grid-flow-row auto-rows-max">
@@ -126,7 +145,7 @@ export default function Blog() {
 
           {data &&
           data.blogsConnection &&
-          data.blogsConnection.pageInfo.hasNextPage == false ? (
+          data.blogsConnection.pageInfo.hasNextPage == true ? (
             <button
               className="btn-loadMore justify-self-auto w-full mt-4 mb-20"
               onClick={(e) =>
