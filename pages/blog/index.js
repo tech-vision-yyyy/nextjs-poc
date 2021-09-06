@@ -142,7 +142,7 @@ export async function getStaticProps() {
           width
         }
       }
-      blogs(first: 4, orderBy: releasedAt_DESC, where: {isVisible: true}) {
+      blogs(first: 4, orderBy: releasedAt_DESC, where: {isVisible: true, isFeatured: false}) {
         title
         content
         category
