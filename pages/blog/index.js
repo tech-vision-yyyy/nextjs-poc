@@ -40,8 +40,13 @@ async function loadMorePosts(endCursor, mutate) {
 export default function Blog() {
   const [session] = useSession();
 
-  const { data, error, mutate } = useSWR("/api/blog", (url) =>
-    fetcher(url, { method: "GET" })
+  const { data, error, mutate } = useSWR(
+    "/api/blog",
+    (url) => fetcher(url, { method: "GET" }),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   if (!error && !data) {
