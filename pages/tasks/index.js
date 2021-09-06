@@ -3,9 +3,12 @@ import Link from "next/link";
 import { getSession } from "next-auth/client";
 import useSWR from "swr";
 
+import TasksLoading from "../../components/TasksLoading";
 import MainHeader from "../../components/MainHeader";
 import graphcms from "../../lib/graphcms";
 import fetcher from "../../lib/fetcher";
+
+const title = "Tasks";
 
 function set7DayDueDate() {
   let date = new Date();
@@ -75,7 +78,9 @@ export default function Tasks({ session }) {
   } = useSWR("/api/tasks/read", (url) => fetcher(url, { method: "GET" }));
 
   if (!error && !tasks) {
-    <p>Loading...</p>;
+    return (
+      <TasksLoading title={title} email={session.user.email}></TasksLoading>
+    );
   }
   if (error) {
     <p>Error</p>;
@@ -84,7 +89,7 @@ export default function Tasks({ session }) {
   return (
     <div className="container mx-auto px-4">
       <Head>
-        <title>Tasks</title>
+        <title>{title}</title>
       </Head>
       <MainHeader email={session.user.email}></MainHeader>
       <h1 className="my-3">Tasks</h1>
