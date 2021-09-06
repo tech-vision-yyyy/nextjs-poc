@@ -40,3 +40,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Component Library
 
 Storybook is published via Chromatic here: https://main--60d4b51606df1d0044bfd5d1.chromatic.com/
+
+## TODO
+
+- FIX: renderMarkdownToHtml for blog post content.
+- FIX: ensure correct font fallbacks in production.
+- Refactor components. TailwindCSS & Storybook.
+- Implement useSWRInfinite for Blog pagination.
