@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       const { blogsConnection } = await graphcms.request(
         `
           query LoadMore($endCursor: String!) {
-            blogsConnection(first: 2, orderBy: releasedAt_DESC, stage: PUBLISHED, where: {isVisible: true, isFeatured: false}, after: $endCursor) {
+            blogsConnection(first: 4, orderBy: releasedAt_DESC, stage: PUBLISHED, where: {isVisible: true, isFeatured: false}, after: $endCursor) {
               blogs: edges {
                 node {
                   title

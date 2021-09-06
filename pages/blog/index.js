@@ -20,17 +20,20 @@ async function loadMorePosts(endCursor, mutate) {
     },
   });
   const morePosts = await response.json();
-  // console.log(`morePosts ${JSON.stringify(morePosts)}`);
-  //=> blogsConnection
-  //=> pageInfo
 
   mutate(async (data) => {
-    return {};
-    // let postData = {...data};
-    // postData.blogsConnection.blogs.push(morePosts.blogsConnection);
-    // postData.blogsConnection.pageInfo = {...postData.blogsConnection.pageInfo, ...morePosts.pageInfo};
-    // console.log(`POST DATA ${JSON.stringify(postData.blogsConnection)}`);
-    // return postData;
+    let postData = { ...data };
+    postData.blogsConnection = {
+      blogs: [
+        ...postData.blogsConnection.blogs,
+        ...morePosts.blogsConnection.blogs,
+      ],
+      pageInfo: {
+        ...postData.blogsConnection.pageInfo,
+        ...morePosts.blogsConnection.pageInfo,
+      },
+    };
+    return postData;
   }, false);
 }
 
@@ -179,7 +182,7 @@ export async function getStaticProps() {
           width
         }
       }
-      blogsConnection(first: 2, orderBy: releasedAt_DESC, stage: PUBLISHED, where: {isVisible: true, isFeatured: false}) {
+      blogsConnection(first: 4, orderBy: releasedAt_DESC, stage: PUBLISHED, where: {isVisible: true, isFeatured: false}) {
         blogs: edges {
           node {
             title

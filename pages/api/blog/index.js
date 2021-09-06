@@ -23,7 +23,7 @@ export default async function handler(req, res) {
               width
             }
           }
-          blogsConnection(first: 2, orderBy: releasedAt_DESC, stage: PUBLISHED, where: {isVisible: true, isFeatured: false}) {
+          blogsConnection(first: 4, orderBy: releasedAt_DESC, stage: PUBLISHED, where: {isVisible: true, isFeatured: false}) {
             blogs: edges {
               node {
                 title
