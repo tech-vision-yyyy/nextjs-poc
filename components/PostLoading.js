@@ -23,7 +23,7 @@ export default function PostLoading({ title, email }) {
                 <div className="h-4 bg-gray-400 rounded w-1/6"></div>
                 <div
                   className="h-4 bg-gray-400 rounded"
-                  style={{ "min-height": "200px" }}
+                  style={{ minHeight: "200px" }}
                 ></div>
                 <div className="space-y-2">
                   <div className="h-4 bg-gray-400 rounded"></div>

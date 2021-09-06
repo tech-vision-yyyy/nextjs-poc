@@ -50,11 +50,13 @@ export default function BlogPost() {
               </span>
               <div className="my-3 bg-gray-800 grid justify-items-center">
                 <Image
-                  src="https://images.ctfassets.net/hrltx12pl8hq/zpozZxV0PvBUevOlUkpEK/220a46578f42ba182231eb7d91051f61/04-technology_1218220324.jpg"
-                  width="480"
-                  height="270"
+                  src={
+                    data && data.post && data.post.image && data.post.image.url
+                  }
+                  width="600"
+                  height="400"
                   className="text-center"
-                  layout="fixed"
+                  layout="intrinsic"
                   alt="Technology"
                 ></Image>
               </div>
@@ -94,6 +96,11 @@ export async function getStaticProps(context) {
           category
           releasedAt
           id
+          image {
+            url
+            height
+            width
+          }
         }
       }
     `,
@@ -101,11 +108,12 @@ export async function getStaticProps(context) {
       id,
     }
   );
+  console.log(`IMAGE ${JSON.stringify(post[0].image)}`);
 
   return {
     props: {
       fallback: {
-        "/api/blog/readPost": { post },
+        "/api/blog/readPost": { post: post[0] },
       },
     },
     // Seconds after which a page re-generation can occur
