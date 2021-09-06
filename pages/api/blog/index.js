@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
   if (session) {
     if (req.method === "GET") {
-      const { featuredPost, blogs } = await graphcms.request(
+      const { featuredPost, blogsConnection } = await graphcms.request(
         `
         query GetPosts {
           featuredPost: blogs(first: 1, where: {isFeatured: true}) {
@@ -23,18 +23,27 @@ export default async function handler(req, res) {
               width
             }
           }
-          blogs(first: 4, orderBy: releasedAt_DESC, where: {isVisible: true, isFeatured: false}) {
-            title
-            content
-            category
-            releasedAt
-            id
+          blogsConnection(first: 2, orderBy: releasedAt_DESC, stage: PUBLISHED, where: {isVisible: true, isFeatured: false}) {
+            blogs: edges {
+              node {
+                title
+                content
+                category
+                releasedAt
+                id
+              }
+            }
+            pageInfo {
+              pageSize
+              hasNextPage
+              endCursor
+            }
           }
         }
       `
       );
 
-      res.status(200).json({ featuredPost, blogs });
+      res.status(200).json({ featuredPost, blogsConnection });
     } else {
       res.status(404).json({});
     }

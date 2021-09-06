@@ -13,10 +13,16 @@ import fetcher from "../../lib/fetcher";
 
 const title = "Blog";
 
+async function loadMorePosts(endCursor, mutate) {
+  alert("Loading...");
+  // TODO query /api/blog/loadMore see Tasks Page
+  // TODO mutate data
+}
+
 export default function Blog() {
   const [session] = useSession();
 
-  const { data, error } = useSWR("/api/blog", (url) =>
+  const { data, error, mutate } = useSWR("/api/blog", (url) =>
     fetcher(url, { method: "GET" })
   );
 
@@ -99,17 +105,18 @@ export default function Blog() {
           <h2>Recent</h2>
           <div className="grid grid-flow-row auto-rows-max">
             {data &&
-              data.blogs &&
-              data.blogs.map((post, index) => {
+              data.blogsConnection &&
+              data.blogsConnection.blogs &&
+              data.blogsConnection.blogs.map((post, index) => {
                 return (
-                  <Link href={`/blog/${post.id}`} key={index}>
+                  <Link href={`/blog/${post.node.id}`} key={index}>
                     <a className="post-link">
                       <div className="p-3">
-                        <h3>{post.title}</h3>
+                        <h3>{post.node.title}</h3>
                         <span className="text-gray-600">
-                          {post.releasedAt} | {post.category}
+                          {post.node.releasedAt} | {post.node.category}
                         </span>
-                        <p>{truncate(post.content, 250)}</p>
+                        <p>{truncate(post.node.content, 250)}</p>
                       </div>
                     </a>
                   </Link>
@@ -117,9 +124,20 @@ export default function Blog() {
               })}
           </div>
 
-          <button className="btn-loadMore justify-self-auto w-full mt-4 mb-20">
-            Load more...
-          </button>
+          {data &&
+          data.blogsConnection &&
+          data.blogsConnection.pageInfo.hasNextPage == false ? (
+            <button
+              className="btn-loadMore justify-self-auto w-full mt-4 mb-20"
+              onClick={(e) =>
+                loadMorePosts(data.blogsConnection.pageInfo.endCursor, mutate)
+              }
+            >
+              Load more...
+            </button>
+          ) : (
+            <div className="mb-20"></div>
+          )}
         </div>
       </div>
     </div>
@@ -127,7 +145,7 @@ export default function Blog() {
 }
 
 export async function getStaticProps() {
-  const { featuredPost, blogs } = await graphcms.request(
+  const { featuredPost, blogsConnection } = await graphcms.request(
     `
     query GetPosts {
       featuredPost: blogs(first: 1, where: {isFeatured: true}) {
@@ -142,12 +160,21 @@ export async function getStaticProps() {
           width
         }
       }
-      blogs(first: 4, orderBy: releasedAt_DESC, where: {isVisible: true, isFeatured: false}) {
-        title
-        content
-        category
-        releasedAt
-        id
+      blogsConnection(first: 2, orderBy: releasedAt_DESC, stage: PUBLISHED, where: {isVisible: true, isFeatured: false}) {
+        blogs: edges {
+          node {
+            title
+            content
+            category
+            releasedAt
+            id
+          }
+        }
+        pageInfo {
+          pageSize
+          hasNextPage
+          endCursor
+        }
       }
     }
   `
@@ -156,7 +183,7 @@ export async function getStaticProps() {
   return {
     props: {
       fallback: {
-        "/api/blog": { featuredPost, blogs },
+        "/api/blog": { featuredPost, blogsConnection },
       },
     },
     // Seconds after which a page re-generation can occur
