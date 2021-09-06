@@ -108,7 +108,6 @@ export async function getStaticProps(context) {
       id,
     }
   );
-  console.log(`IMAGE ${JSON.stringify(post[0].image)}`);
 
   return {
     props: {

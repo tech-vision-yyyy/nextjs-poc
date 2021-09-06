@@ -17,6 +17,11 @@ export default async function handler(req, res) {
             category
             releasedAt
             id
+            image {
+              url
+              height
+              width
+            }
           }
           blogs(first: 4, orderBy: releasedAt_DESC, where: {isVisible: true}) {
             title

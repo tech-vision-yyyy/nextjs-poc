@@ -79,11 +79,17 @@ export default function Blog() {
                 </a>
               </Link>
               <Image
-                src="https://images.ctfassets.net/hrltx12pl8hq/zpozZxV0PvBUevOlUkpEK/220a46578f42ba182231eb7d91051f61/04-technology_1218220324.jpg"
-                width="480"
-                height="270"
+                src={
+                  data &&
+                  data.featuredPost &&
+                  data.featuredPost.length > 0 &&
+                  data.featuredPost[0].image &&
+                  data.featuredPost[0].image.url
+                }
+                width="600"
+                height="400"
                 className="rounded-md"
-                layout="responsive"
+                layout="intrinsic"
                 alt="Technology"
               ></Image>
             </div>
@@ -130,6 +136,11 @@ export async function getStaticProps() {
         category
         releasedAt
         id
+        image {
+          url
+          height
+          width
+        }
       }
       blogs(first: 4, orderBy: releasedAt_DESC, where: {isVisible: true}) {
         title
