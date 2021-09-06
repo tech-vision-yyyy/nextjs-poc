@@ -41,7 +41,7 @@ async function toggleTaskCompleted(id, isCompleted, mutate) {
 async function deleteTask(id, mutate) {
   mutate(async (data) => data.filter((t) => t.id !== id), false);
 
-  await fetch(`/api/tasks/delete`, {
+  await fetch("/api/tasks/delete", {
     method: "POST",
     body: JSON.stringify({ id }),
     headers: {
@@ -54,20 +54,16 @@ async function addNewTask(assignedTo, mutate) {
   const description = prompt("Please enter a description:");
   const dueDate = set7DayDueDate();
 
-  mutate(
-    async (data) => [...data, { description, dueDate, assignedTo }],
-    false
-  );
-
-  await fetch(`/api/tasks/create`, {
+  const response = await fetch("/api/tasks/create", {
     method: "POST",
     body: JSON.stringify({ description, dueDate, assignedTo }),
     headers: {
       "Content-Type": "application/json",
     },
   });
+  const newTask = await response.json();
 
-  mutate();
+  mutate(async (data) => [...data, newTask], false);
 }
 
 export default function Tasks({ session }) {
@@ -111,29 +107,40 @@ export default function Tasks({ session }) {
               tasks.map((task, index) => (
                 <tr key={index}>
                   <td className="task-table-td text-center">
-                    <label className="inline-flex items-center align-middle">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-5 w-5 text-gray-600"
-                        checked={task.isCompleted ? true : false}
-                        onChange={(e) =>
-                          toggleTaskCompleted(
-                            task.id,
-                            !task.isCompleted,
-                            mutate
-                          )
-                        }
-                      />
-                    </label>
+                    {task.id ? (
+                      <label className="inline-flex items-center align-middle">
+                        <input
+                          type="checkbox"
+                          className="form-checkbox h-5 w-5 text-gray-600"
+                          checked={task.isCompleted ? true : false}
+                          onChange={(e) =>
+                            toggleTaskCompleted(
+                              task.id,
+                              !task.isCompleted,
+                              mutate
+                            )
+                          }
+                        />
+                      </label>
+                    ) : (
+                      ""
+                    )}
                   </td>
                   <td className="task-table-td task-text">
                     {task.description}
                   </td>
                   <td className="task-table-td task-dueDate">{task.dueDate}</td>
                   <td className="task-table-td task-delete">
-                    <button onClick={(e) => deleteTask(task.id, mutate)}>
-                      x
-                    </button>
+                    {task.id ? (
+                      <button
+                        onClick={(e) => deleteTask(task.id, mutate)}
+                        className="task-delete-btn"
+                      >
+                        x
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </td>
                 </tr>
               ))}

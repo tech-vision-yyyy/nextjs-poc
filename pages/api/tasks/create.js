@@ -12,16 +12,19 @@ export default async function handler(req, res) {
       const dueDate = req.body.dueDate;
       const assignedTo = session.user.email;
 
-      const task = await graphcms.request(
+      const { task } = await graphcms.request(
         `
         mutation CreateTask($description: String!, $dueDate: Date!, $assignedTo: String!) {
-          createTask(data: {
+          task: createTask(data: {
               description: $description,
               dueDate: $dueDate,
               assignedTo: $assignedTo,
               isCompleted: false
           }) {
             id
+            description
+            dueDate
+            isCompleted
           }
         }
       `,
@@ -38,7 +41,7 @@ export default async function handler(req, res) {
         }
       `,
         {
-          id: task.createTask.id,
+          id: task.id,
         }
       );
 
