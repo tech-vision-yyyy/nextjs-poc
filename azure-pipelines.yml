@@ -1,5 +1,6 @@
 variables:
   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  npm_config_cache: $(Pipeline.Workspace)/.npm
 
 pool:
   vmImage: ubuntu-latest
@@ -22,11 +23,19 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Print the Vercel Preview URL"
 
+  - task: Cache@2
+    inputs:
+      key: 'npm | "$(Agent.OS)" | package-lock.json'
+      restoreKeys: |
+        npm | "$(Agent.OS)"
+      path: $(npm_config_cache)
+    displayName: Cache npm
+
   - script: npm ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Install dependencies"
 
-  - script: CYPRESS_BASE_URL=$(cat deployment-url.txt) npm run cy:run-and-record
+  - script: CYPRESS_BASE_URL=$(cat deployment-url.txt) CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
 
