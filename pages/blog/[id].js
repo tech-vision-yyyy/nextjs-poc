@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
 import useSWR from "swr";
+import marked from "marked";
 
 import PostLoading from "../../components/PostLoading";
 import MainHeader from "../../components/MainHeader";
@@ -35,7 +36,7 @@ export default function BlogPost() {
         <title>{title}</title>
       </Head>
       <MainHeader email={session.user.email}></MainHeader>
-      <h1 className="my-3">Blog Post</h1>
+      <h1 className="my-3">{title}</h1>
       <Link href="/blog">
         <a className="simple-link">Back</a>
       </Link>
@@ -60,7 +61,12 @@ export default function BlogPost() {
                   alt="Technology"
                 ></Image>
               </div>
-              <p className="mb-4">{data && data.post && data.post.content}</p>
+              <div
+                className="blog-post mb-4"
+                dangerouslySetInnerHTML={{
+                  __html: data && data.post && data.post.content,
+                }}
+              ></div>
             </div>
           </div>
         </div>
@@ -108,6 +114,9 @@ export async function getStaticProps(context) {
       id,
     }
   );
+
+  const html = marked(post[0].content);
+  post[0].content = html;
 
   return {
     props: {

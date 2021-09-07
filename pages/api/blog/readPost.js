@@ -1,4 +1,5 @@
 import { getSession } from "next-auth/client";
+import marked from "marked";
 
 import graphcms from "../../../lib/graphcms";
 
@@ -29,6 +30,9 @@ export default async function handler(req, res) {
           id: req.query.id,
         }
       );
+
+      const html = marked(post[0].content);
+      post[0].content = html;
 
       res.status(200).json({ post: post[0] });
     } else {
