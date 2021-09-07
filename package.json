@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-poc",
+  "name": "nextjs-graphcms-poc",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
     "prepare": "husky install",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "cy:run-and-record": "cypress run --record",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -s public/",
     "serve-storybook": "serve storybook-static",
