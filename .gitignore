@@ -37,6 +37,7 @@ report-*
 # Cypress
 /cypress/screenshots
 /cypress/videos
+deployment-url.txt
 
 # Storybook
 /storybook-static

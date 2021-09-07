@@ -6,7 +6,7 @@ pool:
 
 steps:
   - checkout: self
-    path: nextjs-poc
+    path: nextjs-graphcms-poc
 
   - script: vercel --version
     displayName: "Vercel Version"
@@ -14,9 +14,21 @@ steps:
   - script: vercel link --token $(VERCEL_SECRET) --confirm
     displayName: "Vercel Project Linking"
 
-  - script: vercel --token $(VERCEL_SECRET) .
+  - script: vercel --token $(VERCEL_SECRET) . > deployment-url.txt
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Deploy to Vercel"
+
+  - script: echo $(cat deployment-url.txt)
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Print the Vercel Preview URL"
+
+  - script: export CYPRESS_BASE_URL=$(cat deployment-url.txt)
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Set the Cypress Base URL to the Vercel Preview URL"
+
+  - script: npm run cy:run-and-record
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Run the Cypress Integration Tests"
 
   - script: vercel --token $(VERCEL_SECRET) --prod .
     condition: and(succeeded(), eq(variables.isMain, 'True'))
