@@ -14,6 +14,10 @@ steps:
   - script: vercel link --token $(VERCEL_SECRET) --confirm
     displayName: "Vercel Project Linking"
 
+  - script: vercel --token $(VERCEL_SECRET) --prod .
+    condition: and(succeeded(), eq(variables.isMain, 'True'))
+    displayName: "Deploy to Vercel"
+
   - script: vercel --token $(VERCEL_SECRET) . > deployment-url.txt
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Deploy to Vercel"
@@ -29,7 +33,3 @@ steps:
   - script: npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
-
-  - script: vercel --token $(VERCEL_SECRET) --prod .
-    condition: and(succeeded(), eq(variables.isMain, 'True'))
-    displayName: "Deploy to Vercel"
