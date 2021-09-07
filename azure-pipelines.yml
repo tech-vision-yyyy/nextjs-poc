@@ -26,6 +26,10 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Set the Cypress Base URL to the Vercel Preview URL"
 
+  - script: npm ci
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Install dependencies"
+
   - script: npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
