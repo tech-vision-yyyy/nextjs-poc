@@ -28,6 +28,7 @@ steps:
     displayName: "Print the Vercel Preview URL"
 
   - task: Cache@2
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
     inputs:
       key: 'npm | "$(Agent.OS)" | package-lock.json'
       restoreKeys: |
