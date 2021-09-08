@@ -7,6 +7,8 @@ import NextAuth from "../lib/next-auth";
 import Messages from "../i18n/Messages";
 import "../styles/globals.css";
 
+console.log(process.env.PREVIEW_PASSWORD_HASH);
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 

@@ -44,7 +44,6 @@ export default NextAuth({
               const previewEmail = process.env.PREVIEW_EMAIL;
               const previewPasswordHash = process.env.PREVIEW_PASSWORD_HASH;
 
-              // FIX not receiving complete password hash from .env.local
               const passwordMatch = bcrypt.compareSync(
                 credentials.password,
                 previewPasswordHash
