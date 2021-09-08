@@ -23,15 +23,6 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Deploy to Vercel"
 
-  - script: echo $(NEXT_PUBLIC_VERCEL_URL)
-    displayName: "Print NEXT_PUBLIC_VERCEL_URL"
-
-  - script: echo $(NEXTAUTH_URL)
-    displayName: "Print NEXTAUTH_URL"
-
-  - script: echo $(VERCEL_URL)
-    displayName: "Print VERCEL_URL"
-
   - task: Cache@2
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     inputs:
