@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/client";
 import { FormattedMessage } from "react-intl";
-import { useSession } from "next-auth/client";
+import { useSession, signIn } from "next-auth/client";
 
 import styles from "../styles/Index.module.css";
 import SimpleText from "../components/SimpleText";
+
+const isProduction = process.env.NODE_ENV == "production";
 
 export default function Index() {
   const router = useRouter();
@@ -41,15 +43,21 @@ export default function Index() {
             id="index.getStarted"
             defaultMessage="Get started by"
           ></FormattedMessage>{" "}
-          <button
-            onClick={() => signIn("credentials", { callbackUrl: "/home" })}
-            className="bold-link"
-          >
-            <FormattedMessage
-              id="index.loggingIn"
-              defaultMessage="logging in via Okta"
-            ></FormattedMessage>{" "}
-          </button>
+          {isProduction ? (
+            <button
+              onClick={() => signIn("okta", { callbackUrl: "/home" })}
+              className="bold-link"
+            >
+              <FormattedMessage
+                id="index.loggingIn"
+                defaultMessage="logging in via Okta"
+              ></FormattedMessage>{" "}
+            </button>
+          ) : (
+            <Link href="/api/auth/signin">
+              <a className="bold-link">logging in.</a>
+            </Link>
+          )}
         </p>
 
         <div className={styles.grid}>
