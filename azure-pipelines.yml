@@ -12,16 +12,20 @@ steps:
   - script: vercel --version
     displayName: "Vercel Version"
 
-  - script: vercel link --token $(VERCEL_SECRET) --confirm
-    displayName: "Vercel Project Linking"
+  # - script: vercel link --token $(VERCEL_SECRET) --confirm
+  #   displayName: "Vercel Project Linking"
 
-  - script: vercel --token $(VERCEL_SECRET) --prod .
-    condition: and(succeeded(), eq(variables.isMain, 'True'))
-    displayName: "Deploy to Vercel"
+  # - script: vercel --token $(VERCEL_SECRET) --prod .
+  #   condition: and(succeeded(), eq(variables.isMain, 'True'))
+  #   displayName: "Deploy to Vercel"
 
-  - script: vercel --token $(VERCEL_SECRET) . > deployment-url.txt
+  # - script: vercel --token $(VERCEL_SECRET) . > deployment-url.txt
+  #   condition: and(succeeded(), eq(variables.isMain, 'False'))
+  #   displayName: "Deploy to Vercel"
+
+  - script: echo $GRAPHCMS_TOKEN
     condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Deploy to Vercel"
+    displayName: "Print env variable GRAPHCMS_TOKEN"
 
   - task: Cache@2
     condition: and(succeeded(), eq(variables.isMain, 'False'))
@@ -31,10 +35,6 @@ steps:
         npm | "$(Agent.OS)"
       path: $(npm_config_cache)
     displayName: Cache npm
-
-  - script: echo $GRAPHCMS_TOKEN
-    condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Print env variable GRAPHCMS_TOKEN"
 
   - script: npm ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
