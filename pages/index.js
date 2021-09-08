@@ -42,7 +42,7 @@ export default function Index() {
             defaultMessage="Get started by"
           ></FormattedMessage>{" "}
           <button
-            onClick={() => signIn("okta", { callbackUrl: "/home" })}
+            onClick={() => signIn("credentials", { callbackUrl: "/home" })}
             className="bold-link"
           >
             <FormattedMessage

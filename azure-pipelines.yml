@@ -47,6 +47,7 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Build the application"
     env:
+      PREVIEW_PASSWORD_HASH: $(PREVIEW_PASSWORD_HASH)
       GRAPHCMS_TOKEN: $(GRAPHCMS_TOKEN)
       OKTA_DOMAIN: $(OKTA_DOMAIN)
       OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
@@ -60,7 +61,7 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
     env:
-      AUTH_USERNAME: $(AUTH_USERNAME)
-      AUTH_PASSWORD: $(AUTH_PASSWORD)
+      PREVIEW_EMAIL: $(PREVIEW_EMAIL)
+      PREVIEW_PASSWORD: $(PREVIEW_PASSWORD)
       OKTA_DOMAIN: $(OKTA_DOMAIN)
       OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
