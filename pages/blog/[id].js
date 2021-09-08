@@ -42,7 +42,7 @@ export default function BlogPost() {
       </Link>
       <div className="mt-6">
         <div className="featured-section">
-          <div className="border-2 border-gray-200 rounded-md p-3 mb-6">
+          <div className="border-2 border-gray-300 rounded-md p-3 mb-6">
             <div>
               <h2>{data && data.post && data.post.title}</h2>
               <span className="text-gray-400">

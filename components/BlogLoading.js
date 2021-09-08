@@ -16,7 +16,7 @@ export default function BlogLoading({ title, email }) {
       </Link>
       <div className="mt-6">
         <div className="featured-section">
-          <div className="border border-gray-200 shadow rounded-md p-4 w-full mx-auto">
+          <div className="border border-gray-300 shadow rounded-md p-4 w-full mx-auto">
             <div className="flex space-x-4">
               <div className="flex-1 space-y-4 py-1">
                 <h2 className="text-green-400">Featured</h2>
