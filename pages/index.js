@@ -17,7 +17,7 @@ export default function Index() {
   const router = useRouter();
   const [session, loading] = useSession();
 
-  console.log(`NEXT_PUBLIC_VERCEL_URL ${NEXT_PUBLIC_VERCEL_URL}`);
+  console.log(`NEXT_PUBLIC_VERCEL_URL ${process.env.NEXT_PUBLIC_VERCEL_URL}`);
 
   useEffect(() => {
     if (session) {
