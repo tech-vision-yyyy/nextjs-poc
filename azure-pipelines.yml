@@ -32,9 +32,9 @@ steps:
       path: $(npm_config_cache)
     displayName: Cache npm
 
-  - script: echo $NEXTAUTH_URL
+  - script: echo $GRAPHCMS_TOKEN
     condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Print env variable NEXTAUTH_URL"
+    displayName: "Print env variable GRAPHCMS_TOKEN"
 
   - script: npm ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
