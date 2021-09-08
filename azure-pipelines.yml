@@ -23,12 +23,6 @@ steps:
   #   condition: and(succeeded(), eq(variables.isMain, 'False'))
   #   displayName: "Deploy to Vercel"
 
-  - script: echo $OKTA_DOMAIN
-    condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Print env variable OKTA_DOMAIN"
-    env:
-      OKTA_DOMAIN: $(OKTA_DOMAIN)
-
   - task: Cache@2
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     inputs:
@@ -42,6 +36,13 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Install dependencies"
 
+  - task: Cache@2
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    inputs:
+      key: 'next | "$(Agent.OS)" | package-lock.json'
+      path: "$(System.DefaultWorkingDirectory)/.next/cache"
+    displayName: "Cache .next/cache"
+
   - script: npm run build
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Build the application"
@@ -54,10 +55,12 @@ steps:
   - script: npm run start:ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Start the local server"
-    env:
-      AUTH_USERNAME: $(AUTH_USERNAME)
-      AUTH_PASSWORD: $(AUTH_PASSWORD)
 
   - script: CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
+    env:
+      AUTH_USERNAME: $(AUTH_USERNAME)
+      AUTH_PASSWORD: $(AUTH_PASSWORD)
+      OKTA_DOMAIN: $(OKTA_DOMAIN)
+      OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
