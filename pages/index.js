@@ -32,7 +32,6 @@ export default function Index() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          _
           <FormattedMessage
             id="index.welcome"
             defaultMessage="Welcome to a Next.js Demo!"
