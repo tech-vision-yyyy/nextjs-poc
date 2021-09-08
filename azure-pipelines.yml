@@ -26,6 +26,8 @@ steps:
   - script: echo $GRAPHCMS_TOKEN
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Print env variable GRAPHCMS_TOKEN"
+    env:
+      GRAPHCMS_TOKEN: $(GRAPHCMS_TOKEN)
 
   - task: Cache@2
     condition: and(succeeded(), eq(variables.isMain, 'False'))
@@ -43,6 +45,8 @@ steps:
   - script: npm run build
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Build the application"
+    env:
+      GRAPHCMS_TOKEN: $(GRAPHCMS_TOKEN)
 
   - script: npm run start:ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
