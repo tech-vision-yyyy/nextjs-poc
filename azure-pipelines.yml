@@ -50,12 +50,13 @@ steps:
       OKTA_DOMAIN: $(OKTA_DOMAIN)
       OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
       OKTA_CLIENT_SECRET: $(OKTA_CLIENT_SECRET)
-      AUTH_USERNAME: $(AUTH_USERNAME)
-      AUTH_PASSWORD: $(AUTH_PASSWORD)
 
   - script: npm run start:ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Start the local server"
+    env:
+      AUTH_USERNAME: $(AUTH_USERNAME)
+      AUTH_PASSWORD: $(AUTH_PASSWORD)
 
   - script: CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))

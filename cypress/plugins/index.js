@@ -28,6 +28,7 @@ module.exports = (on, config) => {
 
   console.log(`AUTH_USERNAME ${process.env.AUTH_USERNAME}`);
   console.log(`OKTA_DOMAIN ${process.env.OKTA_DOMAIN}`);
+  console.log(`OKTA_CLIENT_ID ${process.env.OKTA_CLIENT_ID}`);
 
   config.env.auth_username = process.env.AUTH_USERNAME;
   config.env.auth_password = process.env.AUTH_PASSWORD;
