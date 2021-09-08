@@ -24,7 +24,6 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
-    "axios": "^0.21.1",
     "graphql": "^15.5.1",
     "graphql-request": "^3.5.0",
     "lodash": "^4.17.21",
