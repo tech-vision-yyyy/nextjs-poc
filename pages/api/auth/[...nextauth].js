@@ -12,9 +12,8 @@ export default NextAuth({
     // The Credentials provider can only be used if JSON Web Tokens are
     // enabled for sessions. Users authenticated with the Credentials
     // provider are not persisted in the database.
-    ...(isProduction
-      ? []
-      : [
+    ...(!isProduction || isPreview
+      ? [
           Providers.Credentials({
             id: "credentials",
             // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -54,7 +53,8 @@ export default NextAuth({
               return null;
             },
           }),
-        ]),
+        ]
+      : []),
 
     ...(isPreview
       ? []
