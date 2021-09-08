@@ -32,6 +32,10 @@ steps:
       path: $(npm_config_cache)
     displayName: Cache npm
 
+  - script: echo $NEXTAUTH_URL
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Print env variable NEXTAUTH_URL"
+
   - script: npm ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Install dependencies"
