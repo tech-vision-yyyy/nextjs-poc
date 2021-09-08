@@ -26,14 +26,8 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-  console.log(`AUTH_USERNAME ${process.env.AUTH_USERNAME}`);
-  console.log(`OKTA_DOMAIN ${process.env.OKTA_DOMAIN}`);
-  console.log(`OKTA_CLIENT_ID ${process.env.OKTA_CLIENT_ID}`);
-
-  config.env.auth_username = process.env.AUTH_USERNAME;
-  config.env.auth_password = process.env.AUTH_PASSWORD;
-  config.env.okta_domain = process.env.OKTA_DOMAIN;
-  config.env.okta_client_id = process.env.OKTA_CLIENT_ID;
+  config.env.preview_email = process.env.PREVIEW_EMAIL;
+  config.env.preview_password = process.env.PREVIEW_PASSWORD;
 
   return config;
 };
