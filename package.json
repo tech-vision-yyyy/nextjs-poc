@@ -6,8 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:ci": "npm start & wait-on http://localhost:3000",
     "lint": "next lint",
     "test": "npm run cy:run",
+    "ci:test": "npm run cy:run",
     "prepare": "husky install",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
@@ -57,7 +59,8 @@
     "prettier": "^2.3.2",
     "storybook": "^6.3.7",
     "tailwindcss": "^2.2.7",
-    "trim": "^0.0.1"
+    "trim": "^0.0.1",
+    "wait-on": "^6.0.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
