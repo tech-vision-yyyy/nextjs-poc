@@ -23,11 +23,11 @@ steps:
   #   condition: and(succeeded(), eq(variables.isMain, 'False'))
   #   displayName: "Deploy to Vercel"
 
-  - script: echo $GRAPHCMS_TOKEN
+  - script: echo $OKTA_DOMAIN
     condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Print env variable GRAPHCMS_TOKEN"
+    displayName: "Print env variable OKTA_DOMAIN"
     env:
-      GRAPHCMS_TOKEN: $(GRAPHCMS_TOKEN)
+      OKTA_DOMAIN: $(OKTA_DOMAIN)
 
   - task: Cache@2
     condition: and(succeeded(), eq(variables.isMain, 'False'))
@@ -47,6 +47,11 @@ steps:
     displayName: "Build the application"
     env:
       GRAPHCMS_TOKEN: $(GRAPHCMS_TOKEN)
+      OKTA_DOMAIN: $(OKTA_DOMAIN)
+      OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
+      OKTA_CLIENT_SECRET: $(OKTA_CLIENT_SECRET)
+      AUTH_USERNAME: $(AUTH_USERNAME)
+      AUTH_PASSWORD: $(AUTH_PASSWORD)
 
   - script: npm run start:ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
