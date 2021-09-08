@@ -5,8 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/client";
 import { FormattedMessage } from "react-intl";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/client";
 
 import styles from "../styles/Index.module.css";
@@ -51,7 +49,6 @@ export default function Index() {
               id="index.loggingIn"
               defaultMessage="logging in via Okta"
             ></FormattedMessage>{" "}
-            !
           </button>
         </p>
 
