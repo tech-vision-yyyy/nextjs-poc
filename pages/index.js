@@ -51,6 +51,7 @@ export default function Index() {
               id="index.loggingIn"
               defaultMessage="logging in via Okta"
             ></FormattedMessage>{" "}
+            :)
           </button>
         </p>
 
