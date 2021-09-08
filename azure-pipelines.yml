@@ -12,20 +12,16 @@ steps:
   - script: vercel --version
     displayName: "Vercel Version"
 
-  - script: vercel link --token $(VERCEL_SECRET) --confirm
-    displayName: "Vercel Project Linking"
+  # - script: vercel link --token $(VERCEL_SECRET) --confirm
+  #   displayName: "Vercel Project Linking"
 
-  - script: vercel --token $(VERCEL_SECRET) --prod .
-    condition: and(succeeded(), eq(variables.isMain, 'True'))
-    displayName: "Deploy to Vercel"
+  # - script: vercel --token $(VERCEL_SECRET) --prod .
+  #   condition: and(succeeded(), eq(variables.isMain, 'True'))
+  #   displayName: "Deploy to Vercel"
 
-  - script: vercel --token $(VERCEL_SECRET) . > deployment-url.txt
-    condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Deploy to Vercel"
-
-  - script: echo $(cat deployment-url.txt)
-    condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Print the Vercel Preview URL"
+  # - script: vercel --token $(VERCEL_SECRET) . > deployment-url.txt
+  #   condition: and(succeeded(), eq(variables.isMain, 'False'))
+  #   displayName: "Deploy to Vercel"
 
   - task: Cache@2
     condition: and(succeeded(), eq(variables.isMain, 'False'))
@@ -40,6 +36,31 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Install dependencies"
 
-  - script: CYPRESS_BASE_URL=$(cat deployment-url.txt) CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
+  - task: Cache@2
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    inputs:
+      key: 'next | "$(Agent.OS)" | package-lock.json'
+      path: "$(System.DefaultWorkingDirectory)/.next/cache"
+    displayName: "Cache .next/cache"
+
+  - script: npm run build
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Build the application"
+    env:
+      GRAPHCMS_TOKEN: $(GRAPHCMS_TOKEN)
+      OKTA_DOMAIN: $(OKTA_DOMAIN)
+      OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
+      OKTA_CLIENT_SECRET: $(OKTA_CLIENT_SECRET)
+
+  - script: npm run start:ci
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Start the local server"
+
+  - script: CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
+    env:
+      AUTH_USERNAME: $(AUTH_USERNAME)
+      AUTH_PASSWORD: $(AUTH_PASSWORD)
+      OKTA_DOMAIN: $(OKTA_DOMAIN)
+      OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
