@@ -12,6 +12,12 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const path = require("path");
+
+require("dotenv").config({
+  path: path.join(__dirname, "..", "..", ".env.local"),
+});
+
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -19,4 +25,11 @@
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+
+  config.env.auth_username = process.env.AUTH_USERNAME;
+  config.env.auth_password = process.env.AUTH_PASSWORD;
+  config.env.okta_domain = process.env.OKTA_DOMAIN;
+  config.env.okta_client_id = process.env.OKTA_CLIENT_ID;
+
+  return config;
 };
