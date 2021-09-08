@@ -11,6 +11,7 @@ import styles from "../styles/Index.module.css";
 import SimpleText from "../components/SimpleText";
 
 const isProduction = process.env.NODE_ENV == "production";
+const isPreview = process.env.VERCEL_ENV == "preview";
 
 export default function Index() {
   const router = useRouter();
@@ -43,7 +44,7 @@ export default function Index() {
             id="index.getStarted"
             defaultMessage="Get started by"
           ></FormattedMessage>{" "}
-          {isProduction ? (
+          {isProduction && !isPreview ? (
             <button
               onClick={() => signIn("okta", { callbackUrl: "/home" })}
               className="bold-link"

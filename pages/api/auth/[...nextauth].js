@@ -5,9 +5,6 @@ import bcrypt from "bcrypt";
 const isProduction = process.env.NODE_ENV == "production";
 const isPreview = process.env.VERCEL_ENV == "preview";
 
-console.log(`NODE_ENV ${process.env.NODE_ENV}`);
-console.log(`VERCEL_ENV ${process.env.VERCEL_ENV}`);
-
 // https://next-auth.js.org/configuration/options
 export default NextAuth({
   theme: "light",
