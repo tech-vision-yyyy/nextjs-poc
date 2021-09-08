@@ -32,6 +32,7 @@ export default function Index() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
+          _
           <FormattedMessage
             id="index.welcome"
             defaultMessage="Welcome to a Next.js Demo!"
@@ -51,7 +52,6 @@ export default function Index() {
               id="index.loggingIn"
               defaultMessage="logging in via Okta"
             ></FormattedMessage>{" "}
-            {/*<FontAwesomeIcon icon={faArrowRight} />*/}
           </button>
         </p>
 
