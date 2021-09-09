@@ -1,4 +1,4 @@
-describe.skip("unauth view", function () {
+describe("unauth view", function () {
   beforeEach(function () {
     cy.signout();
     cy.visit("/");

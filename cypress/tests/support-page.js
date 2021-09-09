@@ -1,4 +1,4 @@
-describe.skip("Support Page", function () {
+describe("Support Page", function () {
   beforeEach(function () {
     cy.login();
     cy.visit("/support");
