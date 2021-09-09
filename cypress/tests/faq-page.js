@@ -1,4 +1,4 @@
-describe("FAQ Page", function () {
+describe.skip("FAQ Page", function () {
   before(function () {
     cy.login();
   });
@@ -15,7 +15,7 @@ describe("FAQ Page", function () {
     cy.get("a[href='/home']").contains("Back");
   });
 
-  it.only("should have an answer for each question", function () {
+  it("should have an answer for each question", function () {
     cy.get(".faq-question").then((questions) => {
       cy.get(".faq-answer").then((answers) => {
         expect(questions.length).to.equal(answers.length);
