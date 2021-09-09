@@ -5,6 +5,8 @@ import { useSession } from "next-auth/client";
 
 import MainHeader from "../../components/MainHeader";
 
+const title = "Support";
+
 export default function Support() {
   const [session] = useSession();
   const [projectName, setProjectName] = useState("");
@@ -30,7 +32,7 @@ export default function Support() {
   return (
     <div className="container mx-auto px-4">
       <Head>
-        <title>Support</title>
+        <title>{title}</title>
       </Head>
       <MainHeader email={session.user.email}></MainHeader>
       <h1 className="my-3">Report an Issue</h1>
@@ -38,7 +40,7 @@ export default function Support() {
         <a className="simple-link">Back</a>
       </Link>
       <div>
-        <form className="mt-6" onSubmit={onSubmit}>
+        <form className="mt-6 support-form" onSubmit={onSubmit}>
           <div className="form-group">
             <label htmlFor="input-project-name">Project Name (optional)</label>
             <input

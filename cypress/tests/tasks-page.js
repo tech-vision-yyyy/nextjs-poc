@@ -11,11 +11,11 @@ describe.skip("Tasks Page", function () {
     cy.get("h1").should("have.text", "Tasks");
   });
 
-  it("should enable task creation", function () {
-    // TODO
-  });
-
   it("should have a back link", function () {
     cy.get("a[href='/home']").contains("Back");
+  });
+
+  it("should enable task creation", function () {
+    // TODO
   });
 });
