@@ -1,4 +1,4 @@
-describe("Tasks CRUD", function () {
+describe.skip("Tasks CRUD", function () {
   before(function () {
     cy.login();
   });

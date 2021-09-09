@@ -56,7 +56,7 @@ export default NextAuth({
         ]
       : []),
 
-    ...(isPreview
+    ...(!isProduction || isPreview
       ? []
       : [
           Providers.Okta({
