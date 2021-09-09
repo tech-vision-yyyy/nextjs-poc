@@ -31,5 +31,6 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
     env:
+      # Used to signin the test agent via  NextAuth Credentials.
       PREVIEW_EMAIL: $(PREVIEW_EMAIL)
       PREVIEW_PASSWORD: $(PREVIEW_PASSWORD)
