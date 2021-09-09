@@ -113,10 +113,7 @@ export default function Index() {
             </SimpleText>
           </a>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
+          <a href="https://vercel.com/new" className={styles.card}>
             <h2>
               <FormattedMessage
                 id="index.deploy"
