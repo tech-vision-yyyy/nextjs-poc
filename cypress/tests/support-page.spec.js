@@ -4,11 +4,8 @@ describe("Support Page", function () {
     cy.visit("/support");
   });
 
-  it("should have a title", function () {
+  it("should have a title and back link", function () {
     cy.get("h1").should("have.text", "Report an Issue");
-  });
-
-  it("should have a back link", function () {
     cy.get("a[href='/home']").contains("Back");
   });
 

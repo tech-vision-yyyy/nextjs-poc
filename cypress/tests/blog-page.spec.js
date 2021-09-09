@@ -4,11 +4,8 @@ describe("Blog Page", function () {
     cy.visit("/blog");
   });
 
-  it("should have a title", function () {
+  it("should have a title and back link", function () {
     cy.get("h1").should("have.text", "Blog");
-  });
-
-  it("should have a back link", function () {
     cy.get("a[href='/home']").contains("Back");
   });
 

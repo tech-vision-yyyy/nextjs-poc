@@ -4,11 +4,8 @@ describe("Home Page", function () {
     cy.visit("/home");
   });
 
-  it("should display whose logged in", function () {
+  it("should display whose logged in and include signout button", function () {
     cy.get("span").contains("Logged in as testing@accenture.com");
-  });
-
-  it("should include signout button", function () {
     cy.get("button").contains("Sign out");
   });
 

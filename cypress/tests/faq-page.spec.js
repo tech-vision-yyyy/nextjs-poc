@@ -4,11 +4,8 @@ describe("FAQ Page", function () {
     cy.visit("/faq");
   });
 
-  it("should have a title", function () {
+  it("should have a title and back link", function () {
     cy.get("h1").should("have.text", "Frequently Asked Questions");
-  });
-
-  it("should have a back link", function () {
     cy.get("a[href='/home']").contains("Back");
   });
 
