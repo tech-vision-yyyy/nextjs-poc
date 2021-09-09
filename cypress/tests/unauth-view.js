@@ -1,4 +1,4 @@
-describe("unauth view", function () {
+describe.skip("unauth view", function () {
   beforeEach(function () {
     cy.signout();
     cy.visit("/");
@@ -19,7 +19,7 @@ describe("unauth view", function () {
     cy.get("a[href='/api/auth/signin']").contains("logging in.");
   });
 
-  it.only("should have other important links", function () {
+  it("should have other important links", function () {
     cy.get("a[href='https://nextjs.org/docs']");
     cy.get("a[href='https://nextjs.org/learn']");
     cy.get("a[href='https://github.com/vercel/next.js/tree/master/examples']");

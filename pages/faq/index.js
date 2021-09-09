@@ -26,9 +26,9 @@ export default function FAQ({ faqs }) {
           return (
             <div id={_.kebabCase(qa.question)} className="p-3 my-6" key={index}>
               <a href={`#${_.kebabCase(qa.question)}`}>
-                <h2 className="mb-3">{qa.question}</h2>
+                <h2 className="mb-3 faq-question">{qa.question}</h2>
               </a>
-              <p>{qa.answer}</p>
+              <p className="faq-answer">{qa.answer}</p>
               <divider></divider>
             </div>
           );
