@@ -10,7 +10,9 @@ import { useSession, signIn } from "next-auth/client";
 import styles from "../styles/Index.module.css";
 import SimpleText from "../components/SimpleText";
 
-const isProduction = process.env.NODE_ENV == "production";
+const isProduction =
+  process.env.NODE_ENV == "production" &&
+  process.env.NEXT_PUBLIC_APP_ENV != "test";
 const isPreview = process.env.NEXT_PUBLIC_VERCEL_ENV == "preview";
 
 export default function Index() {

@@ -43,7 +43,7 @@ steps:
       path: "$(System.DefaultWorkingDirectory)/.next/cache"
     displayName: "Cache .next/cache"
 
-  - script: npm run build
+  - script: NEXT_PUBLIC_APP_ENV=test npm run build
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Build the application"
     env:
@@ -53,7 +53,7 @@ steps:
       OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
       OKTA_CLIENT_SECRET: $(OKTA_CLIENT_SECRET)
 
-  - script: npm run start:ci
+  - script: NEXT_PUBLIC_APP_ENV=test npm run start:ci
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Start the local server"
 
