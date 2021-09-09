@@ -1,9 +1,6 @@
 describe.skip("Tasks Page", function () {
-  before(function () {
-    cy.login();
-  });
-
   beforeEach(function () {
+    cy.login();
     cy.visit("/tasks");
   });
 
@@ -13,9 +10,5 @@ describe.skip("Tasks Page", function () {
 
   it("should have a back link", function () {
     cy.get("a[href='/home']").contains("Back");
-  });
-
-  it("should enable task creation", function () {
-    // TODO
   });
 });

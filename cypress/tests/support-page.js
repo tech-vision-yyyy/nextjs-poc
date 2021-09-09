@@ -1,4 +1,4 @@
-describe("Support Page", function () {
+describe.skip("Support Page", function () {
   beforeEach(function () {
     cy.login();
     cy.visit("/support");
@@ -12,7 +12,7 @@ describe("Support Page", function () {
     cy.get("a[href='/home']").contains("Back");
   });
 
-  it.only("should have a submit form", function () {
+  it("should have a submit form", function () {
     cy.get("form.support-form").within(() => {
       cy.get("input[name='project-name']").type("Trial");
       cy.get("input[name='short-description']").type("Trial expired - renewal");

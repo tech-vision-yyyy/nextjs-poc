@@ -62,7 +62,7 @@ export default function Blog() {
         <title>{title}</title>
       </Head>
       <MainHeader email={session.user.email}></MainHeader>
-      <h1 className="my-3">Blog</h1>
+      <h1 className="my-3">{title}</h1>
       <Link href="/home">
         <a className="simple-link">Back</a>
       </Link>
