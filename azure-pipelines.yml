@@ -27,15 +27,6 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Print the Vercel Preview URL"
 
-  - task: Cache@2
-    condition: and(succeeded(), eq(variables.isMain, 'False'))
-    inputs:
-      key: 'npm | "$(Agent.OS)" | cypress/version.txt'
-      restoreKeys: |
-        npm | "$(Agent.OS)"
-      path: $(npm_config_cache)
-    displayName: "Cache Cypress dependency"
-
   - script: npm install --save-dev cypress
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Install Cypress"
