@@ -1,10 +1,13 @@
-describe("Tasks CRUD", () => {
-  beforeEach(() => {
+describe("Tasks CRUD", function () {
+  before(function () {
+    cy.login();
+  });
+
+  beforeEach(function () {
     cy.visit("/tasks");
   });
 
-  it("should create a task", () => {
-    expect(true).to.eq(true);
-    // cy.get("h1").should("have.text", "Tasks");
+  it("should create a task", function () {
+    cy.get("h1").should("have.text", "Tasks");
   });
 });

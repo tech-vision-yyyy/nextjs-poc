@@ -24,45 +24,10 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-import { OktaAuth } from "@okta/okta-auth-js";
+Cypress.Commands.add("login", (email, password) => {
+  cy.visit("/api/auth/signin");
 
-Cypress.Commands.add("loginByOktaApi", (username, password) => {
-  cy.request({
-    method: "POST",
-    url: `https://${Cypress.env("okta_domain")}/api/v1/authn`,
-    body: {
-      username,
-      password,
-    },
-  }).then(({ body }) => {
-    const user = body._embedded.user;
-    const config = {
-      issuer: `https://${Cypress.env("okta_domain")}/oauth2/default`,
-      clientId: Cypress.env("okta_client_id"),
-      redirectUri: "http://localhost:3000/implicit/callback",
-      scope: ["openid", "email"],
-    };
-
-    const authClient = new OktaAuth(config);
-
-    return authClient.token
-      .getWithoutPrompt({ sessionToken: body.sessionToken })
-      .then(({ tokens }) => {
-        const userItem = {
-          token: tokens.accessToken.value,
-          user: {
-            sub: user.id,
-            email: user.profile.login,
-            given_name: user.profile.firstName,
-            family_name: user.profile.lastName,
-            preferred_username: user.profile.login,
-          },
-        };
-
-        window.localStorage.setItem("oktaCypress", JSON.stringify(userItem));
-
-        log.snapshot("after");
-        log.end();
-      });
-  });
+  cy.get("input[name='email']").type(Cypress.env("preview_email"));
+  cy.get("input[name='password']").type(Cypress.env("preview_password"));
+  cy.contains("button", "Sign in with Credentials").click();
 });
