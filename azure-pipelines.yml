@@ -27,6 +27,10 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Print the Vercel Preview URL"
 
+  - script: npm install --save-dev cypress
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Install Cypress"
+
   - script: CYPRESS_BASE_URL=$(cat deployment-url.txt) CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
