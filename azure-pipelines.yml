@@ -23,6 +23,10 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Deploy to Vercel"
 
+  - script: echo $(cat deployment-url.txt)
+    condition: and(succeeded(), eq(variables.isMain, 'False'))
+    displayName: "Print the Vercel Preview URL"
+
   - task: Cache@2
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     inputs:
@@ -57,7 +61,7 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Start the local server"
 
-  - script: CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
+  - script: CYPRESS_BASE_URL=$(cat deployment-url.txt) CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
     env:
