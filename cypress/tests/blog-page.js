@@ -1,4 +1,4 @@
-describe("Blog Page", function () {
+describe.skip("Blog Page", function () {
   beforeEach(function () {
     cy.login();
     cy.visit("/blog");
