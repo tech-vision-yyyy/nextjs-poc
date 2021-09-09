@@ -2,7 +2,9 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import bcrypt from "bcrypt";
 
-const isProduction = process.env.NODE_ENV == "production";
+const isProduction =
+  process.env.NODE_ENV == "production" &&
+  process.env.NEXT_PUBLIC_APP_ENV != "test";
 const isPreview = process.env.NEXT_PUBLIC_VERCEL_ENV == "preview";
 
 // https://next-auth.js.org/configuration/options
@@ -56,7 +58,7 @@ export default NextAuth({
         ]
       : []),
 
-    ...(isPreview
+    ...(!isProduction || isPreview
       ? []
       : [
           Providers.Okta({

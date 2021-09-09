@@ -7,6 +7,8 @@ import { useSession } from "next-auth/client";
 
 import MainHeader from "../../components/MainHeader";
 
+const title = "Home";
+
 export default function Home() {
   const [session] = useSession();
   const router = useRouter();
@@ -21,10 +23,10 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4">
       <Head>
-        <title>Home</title>
+        <title>{title}</title>
       </Head>
       <MainHeader email={session.user.email}></MainHeader>
-      <h1 className="my-3">Home</h1>
+      <h1 className="my-3">{title}</h1>
       <main>
         <ul>
           <li className="flex my-6">

@@ -23,45 +23,18 @@ steps:
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Deploy to Vercel"
 
-  - task: Cache@2
+  - script: echo $(cat deployment-url.txt)
     condition: and(succeeded(), eq(variables.isMain, 'False'))
-    inputs:
-      key: 'npm | "$(Agent.OS)" | package-lock.json'
-      restoreKeys: |
-        npm | "$(Agent.OS)"
-      path: $(npm_config_cache)
-    displayName: Cache npm
+    displayName: "Print the Vercel Preview URL"
 
-  - script: npm ci
+  - script: npm install --save-dev cypress
     condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Install dependencies"
+    displayName: "Install Cypress"
 
-  - task: Cache@2
-    condition: and(succeeded(), eq(variables.isMain, 'False'))
-    inputs:
-      key: 'next | "$(Agent.OS)" | package-lock.json'
-      path: "$(System.DefaultWorkingDirectory)/.next/cache"
-    displayName: "Cache .next/cache"
-
-  - script: npm run build
-    condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Build the application"
-    env:
-      PREVIEW_PASSWORD_HASH: $(PREVIEW_PASSWORD_HASH)
-      GRAPHCMS_TOKEN: $(GRAPHCMS_TOKEN)
-      OKTA_DOMAIN: $(OKTA_DOMAIN)
-      OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
-      OKTA_CLIENT_SECRET: $(OKTA_CLIENT_SECRET)
-
-  - script: npm run start:ci
-    condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Start the local server"
-
-  - script: CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
+  - script: CYPRESS_BASE_URL=$(cat deployment-url.txt) CYPRESS_RECORD_KEY=$(CYPRESS_RECORD_KEY) npm run cy:run-and-record
     condition: and(succeeded(), eq(variables.isMain, 'False'))
     displayName: "Run the Cypress Integration Tests"
     env:
+      # Used to signin the test agent via  NextAuth Credentials.
       PREVIEW_EMAIL: $(PREVIEW_EMAIL)
       PREVIEW_PASSWORD: $(PREVIEW_PASSWORD)
-      OKTA_DOMAIN: $(OKTA_DOMAIN)
-      OKTA_CLIENT_ID: $(OKTA_CLIENT_ID)
