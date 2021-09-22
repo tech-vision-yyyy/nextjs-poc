@@ -51,6 +51,52 @@ PREVIEW_EMAIL=my-email@example.com
 # this is because Next.js supports variable substitution
 # in the ~/.env.local file.
 PREVIEW_PASSWORD_HASH=\$2b\$14\$sWpOC1vklO2.8/GbsfTl6.a9O2F8FV.K3g9vOCWpj0Pk60L1tfWJ2
+# NOTE: to run Cypress integration testing locally or in
+# an ADO Pipeline you'll want to set the  PREVIEW_PASSWORD
+# environment variable.
+PREVIEW_PASSWORD=my-secret
+```
+
+## Setup GraphCMS
+
+This POC's Backend is supported by GraphCMS. The following schema
+is required:
+
+Model: FAQ
+
+- Question: Single line text
+- Answer: Single line text
+- Is Visible: Boolean
+
+Model: Issue
+
+- Project Name: Single line text
+- Short Description: Single line text
+- Description: Multi line text
+- Assigned To: Single line text
+
+Model: Post
+
+- Title: Single line text
+- Content: Markdown
+- Category: Single line text
+- Is Featured: Boolean
+- Is Visible: Boolean
+- Realesed At: Date
+- Image: Asset
+
+Model: Task
+
+- Description: Single line text
+- Is Completed: Boolean
+- Due Date: Date
+- Assigned To: Single line text
+
+Set the GRAPHCMS_TOKEN environment variable:
+
+```bash
+# ~/.env.local
+GRAPHCMS_TOKEN=eyJhbGciOiJSUzI1NiIsInR5c...
 ```
 
 ## Learn More
