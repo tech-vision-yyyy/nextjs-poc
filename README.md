@@ -99,6 +99,17 @@ Set the GRAPHCMS_TOKEN environment variable:
 GRAPHCMS_TOKEN=eyJhbGciOiJSUzI1NiIsInR5c...
 ```
 
+## Setup Cypress.io
+
+Optionally you can setup Cypress.io integration. This is great
+for a central place to review these tests and includes the full
+video recordings.
+
+```bash
+# ~/.env.local
+CYPRESS_RECORD_KEY=3f24d8c9-30a1...
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the
