@@ -1,6 +1,6 @@
-# Next.js-GraphCMS Proof of Concept
+# Next.js Proof of Concept
 
-Deployed: https://nextjs-graphcms-poc.vercel.app
+Example Deployed At: https://nextjs-graphcms-poc.vercel.app
 
 This is a [Next.js](https://nextjs.org/) project
 bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
@@ -92,7 +92,9 @@ Model: Task
 - Due Date: Date
 - Assigned To: Single line text
 
-Set the GRAPHCMS_TOKEN environment variable:
+Set the GRAPHCMS_TOKEN environment variable. Be sure
+that it is configured to have the necessary permissions
+to access model data.
 
 ```bash
 # ~/.env.local
