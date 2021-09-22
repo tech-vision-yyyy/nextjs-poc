@@ -1,8 +1,6 @@
 # Next.js-GraphCMS Proof of Concept
 
-[![Build Status](https://dev.azure.com/allenabettisworth/nextjs-poc/_apis/build/status/nextjs-poc?branchName=main)](https://dev.azure.com/allenabettisworth/nextjs-poc/_build/latest?definitionId=3&branchName=main)
-
-Deployed: https://nextjs-graphcms-poc-sigma.vercel.app
+Deployed: https://nextjs-graphcms-poc.vercel.app
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
