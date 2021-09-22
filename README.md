@@ -34,14 +34,3 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## Component Library
-
-Storybook is published via Chromatic here: https://main--60d4b51606df1d0044bfd5d1.chromatic.com/
-
-## TODO
-
-- FIX: renderMarkdownToHtml for blog post content.
-- FIX: ensure correct font fallbacks in production.
-- Refactor components. TailwindCSS & Storybook.
-- Implement useSWRInfinite for Blog pagination.
