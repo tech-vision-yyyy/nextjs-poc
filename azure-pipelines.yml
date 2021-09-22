@@ -17,11 +17,11 @@ steps:
 
   - script: vercel --token $(VERCEL_SECRET) --prod .
     condition: and(succeeded(), eq(variables.isMain, 'True'))
-    displayName: "Deploy to Vercel"
+    displayName: "Deploy to Vercel for Production"
 
   - script: vercel --token $(VERCEL_SECRET) . > deployment-url.txt
     condition: and(succeeded(), eq(variables.isMain, 'False'))
-    displayName: "Deploy to Vercel"
+    displayName: "Deploy to Vercel for Development"
 
   - script: echo $(cat deployment-url.txt)
     condition: and(succeeded(), eq(variables.isMain, 'False'))
