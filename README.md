@@ -102,12 +102,24 @@ GRAPHCMS_TOKEN=eyJhbGciOiJSUzI1NiIsInR5c...
 ## Setup Cypress.io
 
 Optionally you can setup Cypress.io integration. This is great
-for a central place to review these tests and includes the full
-video recordings.
+for a central place to review tests and review full video
+recordings.
 
 ```bash
 # ~/.env.local
 CYPRESS_RECORD_KEY=3f24d8c9-30a1...
+```
+
+## Setup Okta
+
+For production authentication we use Okta. This requires some
+setup to obtain a domain and client credentials.
+
+```bash
+# ~/.env.local
+OKTA_DOMAIN=my-account.okta.com
+OKTA_CLIENT_ID=...
+OKTA_CLIENT_SECRET=...
 ```
 
 ## Learn More
