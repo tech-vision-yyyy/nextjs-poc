@@ -32,6 +32,27 @@ this directory are treated as
 [API routes](https://nextjs.org/docs/api-routes/introduction)
 instead of React pages.
 
+### Setup Email-Password
+
+While the production environment is setup to use Okta
+authentication the development environment can be
+configured to use any email-password.
+
+```bash
+# Create your password_hash
+npm run hash my-secret
+#=> HASH $2b$14$sWpOC1vklO2.8/GbsfTl6.a9O2F8FV.K3g9vOCWpj0Pk60L1tfWJ2
+
+# Set environment variables
+# ~/.env.local
+NEXTAUTH_URL=http://localhost:3000
+PREVIEW_EMAIL=my-email@example.com
+# WARNING: you have to escape $ characters with '\'
+# this is because Next.js supports variable substitution
+# in the ~/.env.local file.
+PREVIEW_PASSWORD_HASH=\$2b\$14\$sWpOC1vklO2.8/GbsfTl6.a9O2F8FV.K3g9vOCWpj0Pk60L1tfWJ2
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the
