@@ -2,7 +2,6 @@ import { getSession } from "next-auth/client";
 
 import graphcms from "../../../lib/graphcms";
 
-// TODO rate limiting
 export default async function handler(req, res) {
   const session = await getSession({ req });
 

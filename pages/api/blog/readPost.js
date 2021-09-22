@@ -3,7 +3,6 @@ import marked from "marked";
 
 import graphcms from "../../../lib/graphcms";
 
-// TODO rate limiting
 export default async function handler(req, res) {
   const session = await getSession({ req });
 
